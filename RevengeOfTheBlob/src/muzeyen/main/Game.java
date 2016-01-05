@@ -23,7 +23,7 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private Thread thread;
 	private Menu menu;
-	private boolean paused = false;
+	static boolean paused = false;
 	
 	public static enum STATE{
 		MENU,
@@ -222,19 +222,13 @@ public class Game extends Canvas implements Runnable {
 				shooting = true;
 				c.addBullet(new Bullet(p.getX(), p.getY(), this));
 			}	
-			else if (key == KeyEvent.VK_BACK_SPACE){
-				if (paused == false){
+			else if (key == KeyEvent.VK_BACK_SPACE&&paused == false){
 				Game.State = Game.STATE.PAUSE;
 				paused = true;
-				}
-				else{
-					//broken
-					Game.State = Game.STATE.GAME;
-					paused = false;
-				}
-			}	
-		}
+			}
+		}	
 	}
+	
 
 	public void keyReleased(KeyEvent e){
 		
@@ -254,24 +248,14 @@ public class Game extends Canvas implements Runnable {
 			boolean Konami11 = false;
 			if (key == KeyEvent.VK_UP){
 				Konami1 = true;
-				if (key == KeyEvent.VK_UP && Konami1 == true){
-					Konami2 = true;
-					if (key == KeyEvent.VK_DOWN && Konami2 == true){
-						Konami3 = true;
-						if (key == KeyEvent.VK_DOWN &&  Konami3 == true){
-							Konami4 = true;
-							if (key == KeyEvent.VK_LEFT && Konami4 == true){
-								Konami5 = true;
-								if (key == KeyEvent.VK_RIGHT &&  Konami5 == true){
-									System.exit(0);
-								}
-							}
-						}
-					}
-				}
-				
 			}
-	}
+			if (key == KeyEvent.VK_UP && Konami1 == true){
+				Konami2 = true;
+			}
+			if (key == KeyEvent.VK_DOWN && Konami2 == true){
+			    Konami3 = true;}
+			}
+	
 		else if (State == STATE.GAME){
 
 

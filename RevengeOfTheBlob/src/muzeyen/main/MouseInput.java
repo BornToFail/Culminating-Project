@@ -18,14 +18,7 @@ public class MouseInput implements MouseListener {
 		int mx = e.getX();
 		int my = e.getY();
 		// TODO Auto-generated method stub
-		if (Game.State == STATE.PAUSE){
-			if(mx >= 275 && mx <= 425){
-				if(my >= 300 && my <= 350){
-					//Pressed Resume button button
-					characterSelection.ottoOverlay(null);
-				}
-			}
-		}
+		
 			
 	}
 	@Override
@@ -84,24 +77,31 @@ public class MouseInput implements MouseListener {
 					//Pressed Play button
 					Game.State = Game.STATE.MENU;
 				}
+			}
+		}
+	
 		if (Game.State == STATE.PAUSE){
-			if(mx >= 275 && mx <= 425){
-				if(my >= 300 && my <= 350){
-					//Pressed Resume button button
-					Game.State = Game.STATE.GAME;
+				if(mx >= 250 && mx <= 400){
+					if(my >= 300 && my <= 350){
+						//Pressed Resume button button
+						Game.paused = false;
+						Game.State = Game.STATE.GAME;
+					
+					}
+				}
+				if(mx >= 250 && mx <= 400){
+					if(my >= 400 && my <= 450){
+						//Pressed Exit button
+						System.exit(1);
+					}
 				}
 			}
-			if(mx >= 275 && mx <= 425){
-				if(my >= 400 && my <= 450){
-					//Pressed Play button
-					System.exit(1);
-				}
-			}
-		}
-			}
-		}
+
 		
-	}
+	
+	}		
+		
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub

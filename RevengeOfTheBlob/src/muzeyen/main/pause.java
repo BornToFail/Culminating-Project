@@ -11,8 +11,8 @@ public class pause {
 	private BufferedImage image = new BufferedImage(Game.WIDTH,Game.HEIGHT,BufferedImage.TYPE_INT_RGB); //buffers window
 	private static BufferedImage pausedText = null;
 
-	private static Rectangle resumeButton = new Rectangle(275,300, 150, 50);
-	private static  Rectangle quitButton = new Rectangle(275 ,400, 150, 50);
+	private static Rectangle resumeButton = new Rectangle(250,300, 150, 50);
+	private static  Rectangle quitButton = new Rectangle(250 ,400, 150, 50);
 
 	public static void render(Graphics g){
 		Graphics2D g2d = (Graphics2D) g;

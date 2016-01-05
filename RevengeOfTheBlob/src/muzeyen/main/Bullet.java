@@ -16,7 +16,7 @@ public class Bullet {
 		
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		
-		image = ss.grabImage(2, 1, 32, 32);
+		image = ss.grabImage(5, 1, 32, 32);
 	}
 	
 	public void tick(){

@@ -7,23 +7,25 @@ public class Player {
 	
 	private double x; //x-cord of player
 	private double y; //y-cord of player
-	
+	private int s; //Sprite position of player
 	//used to make movement smother 
 	private double velX = 0;
 	private double velY = 0;
-	
+	public static int lives = 3;
+	public static int bombs = 3;
 	private BufferedImage player;
 	
-	public Player(double x, double y, Game game){
+	public Player(double x, double y, int s, Game game){
 		
 		//initialize player and sets x and y c-cord
 		this.x = x;
 		this.y = y;
-		
+		this.s = s;
+
 		//received from getter method in Game class
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		
-		player = ss.grabImage(1, 1, 32, 32);
+		player = ss.grabImage(s, 1, 32, 32);
 	}
 	
 	//update method
@@ -35,8 +37,8 @@ public class Player {
 		if(x <= 0){
 			x=0;
 		}
-		if(x>=640-20){ //-20 was a result of trial and error
-			x=640-20;
+		if(x>=640-172){ //-20 was a result of trial and error
+			x=640-172;
 		}
 		if(y <= 0){
 			y=0;
@@ -59,11 +61,17 @@ public class Player {
 	public double getY(){
 		return y;
 	}
+	public int getS(){
+		return s;
+	}
 	public void setX(double x){
 		this.x = x;
 	}
 	public void setY(double y){
 		this.y = y;
+	}
+	public void setS(int s){
+		this.s = s;
 	}
 	
 	public void setVelX(double velX){

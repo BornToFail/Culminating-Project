@@ -3,6 +3,7 @@ package muzeyen.main;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -18,19 +19,37 @@ public class Game extends Canvas implements Runnable {
 	public static final int HEIGHT = WIDTH/12*9;
 	public static final int SCALE = 2;
 	public final String TITLE = "Revenge of the Blob"; //title
-
+	public static int hudTimer = 0;
 	private boolean running = false;
 	private Thread thread;
+	private Menu menu;
+	private boolean paused = false;
+	
+	public static enum STATE{
+		MENU,
+		SELECT,
+		SETTINGS,
+		GAME,
+		PAUSE, 
+	}
+	
+	public static STATE State = STATE.MENU;
 
 	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB); //buffers window
 	private BufferedImage spriteSheet = null;
 	private BufferedImage background = null;
-	
+	private BufferedImage menuBG_1 = null;
+	private BufferedImage fennelSplash = null;
+	private BufferedImage pauseOverlay = null;
+	private BufferedImage selectionBG = null;
+	private BufferedImage selectionF = null;
+	private BufferedImage selectionO = null;
+	private BufferedImage hudRight = null;
 	private boolean shooting = false;
-	
+    static int ottoState = 1;
+
 	private Player p;
 	private Controller c;
-
 
 
 	//initialize
@@ -38,17 +57,29 @@ public class Game extends Canvas implements Runnable {
 		requestFocus(); //makes it so user doesn't have to press game to begin playing when it launces
 		BufferedImageLoader loader = new BufferedImageLoader();
 		try{
-			spriteSheet = loader.loadImage("/sprite_sheet.png");
+			spriteSheet = loader.loadImage("/sprite_sheet_new.png");
 			background = loader.loadImage("/background.png");
+			menuBG_1 = loader.loadImage("/menuBackground_1.png");
+			selectionBG = loader.loadImage("/selectionBackground_1.png");
+			fennelSplash = loader.loadImage("/fennel.png");
+			pauseOverlay = loader.loadImage("/pauseOverlay.png");
+			selectionF = loader.loadImage("/selectionF.png");
+			selectionO = loader.loadImage("/selectionO.png");
+			hudRight = loader.loadImage("/HUD_Side_Display.png");
+
 		}catch(IOException e){
 			e.printStackTrace();	
 		}
 
 		addKeyListener(new KeyInput(this));
 		
-		p = new Player(200,200,this); //initializes player with x-cord and y-cord 200\
+		p = new Player(200,200, 1 ,this); //initializes player with x-cord and y-cord 200 and the state of the player sprite\
 		c = new Controller(this);
+		menu = new Menu();
+		
+		fennelSplash.getScaledInstance(fennelSplash.getWidth()/3, fennelSplash.getHeight()/3, Image.SCALE_DEFAULT);
 
+		this.addMouseListener(new MouseInput());
 	}
 
 
@@ -112,9 +143,13 @@ public class Game extends Canvas implements Runnable {
 
 	//everything that updates
 	private void tick(){
+		if (State == STATE.GAME){
 		p.tick();
 		c.tick();
-
+		hudTimer++;
+		}else if(State == STATE.PAUSE){
+			//paused
+		}
 	}
 
 	//everything that renders
@@ -128,13 +163,37 @@ public class Game extends Canvas implements Runnable {
 
 		Graphics g = bs.getDrawGraphics(); //draws out buffers
 		//////////////////////////////
+		if (State == STATE.GAME){
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-		
 		g.drawImage(background, 0, 0, null);
-
+		g.drawImage(hudRight, 500, 0, null);
+		HUD.render(g);
+	
 		p.render(g);
 		c.render(g);
+		}else if (State == STATE.MENU){//If it's the MENU state, it will display the menu
+			g.drawImage(menuBG_1, 0, 0, null);
+			g.drawImage(fennelSplash, 50, 100, null);
+			menu.render(g);
+		}else if (State == STATE.SELECT){//If it's the MENU state, it will display the menu
+			g.drawImage(selectionBG, 0, 0, null);
+			g.drawImage(selectionF, 225, 50, null);
+			g.drawImage(selectionO, 10, 50, null);
+
+			characterSelection.render(g);
+
+		}else if (State == STATE.SETTINGS){//If it's the MENU state, it will display the menu
+			g.drawImage(selectionBG, 0, 0, null);
+
+			Settings.render(g);
+
+		}else if (State == STATE.PAUSE){//If it's the MENU state, it will display the pause screen
+			g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+			g.drawImage(background, 0, 0, null);
+			g.drawImage(pauseOverlay, 0, 0, null);
+			pause.render(g);
+		}
 
 		/////////////////////////////
 
@@ -144,43 +203,96 @@ public class Game extends Canvas implements Runnable {
 
 	public void keyPressed(KeyEvent e){
 		int key = e.getKeyCode();
+	
 		
-		if (key == KeyEvent.VK_RIGHT){
-			p.setVelX(5);
+		if (State == STATE.GAME){
+			if (key == KeyEvent.VK_RIGHT){
+				p.setVelX(5);
+			}
+			else if (key == KeyEvent.VK_LEFT){
+				p.setVelX(-5);
+			}
+			else if (key == KeyEvent.VK_DOWN){
+				p.setVelY(5);
+			}
+			else if (key == KeyEvent.VK_UP){
+				p.setVelY(-5);
+			}	
+			else if (key == KeyEvent.VK_SPACE && !shooting){
+				shooting = true;
+				c.addBullet(new Bullet(p.getX(), p.getY(), this));
+			}	
+			else if (key == KeyEvent.VK_BACK_SPACE){
+				if (paused == false){
+				Game.State = Game.STATE.PAUSE;
+				paused = true;
+				}
+				else{
+					//broken
+					Game.State = Game.STATE.GAME;
+					paused = false;
+				}
+			}	
 		}
-		else if (key == KeyEvent.VK_LEFT){
-			p.setVelX(-5);
-		}
-		else if (key == KeyEvent.VK_DOWN){
-			p.setVelY(5);
-		}
-		else if (key == KeyEvent.VK_UP){
-			p.setVelY(-5);
-		}	
-		else if (key == KeyEvent.VK_SPACE && !shooting){
-			shooting = true;
-			c.addBullet(new Bullet(p.getX(), p.getY(), this));
-		}	
 	}
 
 	public void keyReleased(KeyEvent e){
-
+		
+		
 		int key = e.getKeyCode();
+		if (State == STATE.MENU){
+			boolean Konami1 = false;
+			boolean Konami2 = false;
+			boolean Konami3 = false;
+			boolean Konami4 = false;
+			boolean Konami5 = false;
+			boolean Konami6 = false;
+			boolean Konami7 = false;
+			boolean Konami8 = false;
+			boolean Konami9 = false;
+			boolean Konami10 = false;
+			boolean Konami11 = false;
+			if (key == KeyEvent.VK_UP){
+				Konami1 = true;
+				if (key == KeyEvent.VK_UP && Konami1 == true){
+					Konami2 = true;
+					if (key == KeyEvent.VK_DOWN && Konami2 == true){
+						Konami3 = true;
+						if (key == KeyEvent.VK_DOWN &&  Konami3 == true){
+							Konami4 = true;
+							if (key == KeyEvent.VK_LEFT && Konami4 == true){
+								Konami5 = true;
+								if (key == KeyEvent.VK_RIGHT &&  Konami5 == true){
+									System.exit(0);
+								}
+							}
+						}
+					}
+				}
+				
+			}
+	}
+		else if (State == STATE.GAME){
 
-		if (key == KeyEvent.VK_RIGHT){
-			p.setVelX(0);
-		}
-		else if (key == KeyEvent.VK_LEFT){
-			p.setVelX(0);
-		}
-		else if (key == KeyEvent.VK_DOWN){
-			p.setVelY(0);
-		}
-		else if (key == KeyEvent.VK_UP){
-			p.setVelY(0);
-		}
-		else if (key == KeyEvent.VK_SPACE){
-			shooting = false;
+
+			if (key == KeyEvent.VK_RIGHT){
+				p.setVelX(0);
+			}
+			else if (key == KeyEvent.VK_LEFT){
+				p.setVelX(0);
+				ottoState = 1;
+			}
+			else if (key == KeyEvent.VK_DOWN){
+				p.setVelY(0);
+				ottoState = 1;
+			}
+			else if (key == KeyEvent.VK_UP){
+				p.setVelY(0);
+				ottoState = 1;
+			}
+			else if (key == KeyEvent.VK_SPACE){
+				shooting = false;
+			}
 		}
 	}
 

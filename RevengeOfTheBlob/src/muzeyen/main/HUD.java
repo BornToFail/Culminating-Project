@@ -36,14 +36,17 @@ public class HUD {
 		}catch(IOException e){
 			e.printStackTrace();	
 		}
-		
+		Font Konami = new Font("Comic Sans MS", Font.PLAIN, 24);
 		Font fntL = new Font("arial", Font.BOLD, 15);
 //		Font fntSub = new Font("arial",Font.ITALIC ,25);
 		Font fntBTF = new Font("arial",Font.ITALIC ,10);
 //
     	g.setFont(fntL);
 		g.setColor(Color.WHITE);
-		
+		if(Game.konami == true){
+			g.setFont(Konami);
+			g.setColor(Color.GREEN);
+		}
 		String livesLeft = "";
 		
 		if (Player.lives == 3){

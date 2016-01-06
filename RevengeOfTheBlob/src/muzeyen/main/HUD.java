@@ -36,16 +36,22 @@ public class HUD {
 		}catch(IOException e){
 			e.printStackTrace();	
 		}
-		Font Konami = new Font("Comic Sans MS", Font.PLAIN, 24);
+		Font Konami = new Font("Comic Sans MS", Font.PLAIN, 15);
 		Font fntL = new Font("arial", Font.BOLD, 15);
 //		Font fntSub = new Font("arial",Font.ITALIC ,25);
 		Font fntBTF = new Font("arial",Font.ITALIC ,10);
 //
-    	g.setFont(fntL);
-		g.setColor(Color.WHITE);
+
 		if(Game.konami == true){
-			g.setFont(Konami);
-			g.setColor(Color.GREEN);
+			
+			if (Game.hudTimer/100 % 50 == 0){
+				g.setFont(Konami);
+				g.setColor(Color.GREEN);
+				g.drawString("FOLLOW ISSA ON DEVIANTART FOR QUALITY CONTENT ", 50, 200);
+			}
+			else{
+				g.setColor(Color.WHITE);
+			}
 		}
 		String livesLeft = "";
 		
@@ -78,6 +84,8 @@ public class HUD {
 			g.drawImage(ottoLH, 501, 0, null);
 
 		}
+    	g.setFont(fntL);
+		g.setColor(Color.WHITE);
 		g.drawString("Lives "+ livesLeft, 510, 175);
 		g.drawString("Bombs "+ Player.bombs, 510, 225);
 		g.drawString("Time "+ Game.hudTimer/100, 510, 275);

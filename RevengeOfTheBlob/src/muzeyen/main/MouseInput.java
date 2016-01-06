@@ -44,18 +44,18 @@ public class MouseInput implements MouseListener {
 				}
 			}
 		
-		if(mx >= 500 && mx <= 700){
-			if(my >= 300 && my <= 350){
-				//Pressed settings button
-				Game.State = Game.STATE.SETTINGS;
+			if(mx >= 500 && mx <= 700){
+				if(my >= 300 && my <= 350){
+					//Pressed settings button
+					Game.State = Game.STATE.SETTINGS;
+				}
 			}
-		}
-		if(mx >= 500 && mx <= 700){
-			if(my >= 400 && my <= 450){
-				//Pressed quit button
-				System.exit(1);
+			if(mx >= 500 && mx <= 700){
+				if(my >= 400 && my <= 450){
+					//Pressed quit button
+					System.exit(1);
+				}
 			}
-		}
 		}
 		if (Game.State == STATE.SELECT){
 
@@ -69,24 +69,53 @@ public class MouseInput implements MouseListener {
 				if(my >= 50 && my <= 350){
 					Player.selectedCharacter = 1;
 					Player.setSprite();
-					Game.State = Game.STATE.GAME;
+					Game.State = Game.STATE.GMSELECT;
 				}
 			}
 			if(mx >= 225 && mx <= 425){//Tests if the user selects fennel
 				if(my >= 50 && my <= 350){
 					Player.selectedCharacter = 2;
 					Player.setSprite();
-					Game.State = Game.STATE.GAME;
+					Game.State = Game.STATE.GMSELECT;
 				}
 			}
 			if(mx >= 445 && mx <= 500){//Tests if the user selects Perditus 
 				if(my >= 50 && my <= 350){
 					Player.selectedCharacter = 3;
 					Player.setSprite();
+					Game.State = Game.STATE.GMSELECT;
+				}
+			}
+		}
+		if (Game.State == STATE.GMSELECT){
+			if(mx >= 30 && mx <= 230){
+				if(my >= 400 && my <= 450){
+					//Pressed Back button
+					System.out.println("Iwork");
+					Game.State = Game.STATE.SELECT;
+				}
+			}
+			if(mx >= 400 && mx <= 551){
+				if(my >= 125 && my <= 146){
+					//Pressed "MEDIUM SURVIVAL" button
+					System.out.println("Iwork");
+					Game.State = Game.STATE.GAME;
+				}
+			}
+			if(mx >= 400 && mx <= 551){
+				if(my >= 225 && my <= 246){
+					//Pressed "HARD SURVIVAL" button
+					Game.State = Game.STATE.GAME;
+				}
+			}
+			if(mx >= 400 && mx <= 551){
+				if(my >= 325 && my <= 346){
+					//Pressed "HARD SURVIVAL" button
 					Game.State = Game.STATE.GAME;
 				}
 			}
 		}
+
 		if (Game.State == STATE.SETTINGS){
 			if(mx >= 30 && mx <= 230){
 				if(my >= 400 && my <= 450){
@@ -112,15 +141,18 @@ public class MouseInput implements MouseListener {
 					}
 				}
 			}
-
+		}
 		
 	
-	}		
+	
 		
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		int mx = e.getX();
+		int my = e.getY();
+
 	}
+	
 }

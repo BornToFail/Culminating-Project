@@ -27,7 +27,8 @@ public class Game extends Canvas implements Runnable {
 	
 	public static enum STATE{
 		MENU,
-		SELECT,
+		SELECT, //Character Selection menu
+		GMSELECT,//Game Mode Selection menu
 		SETTINGS,
 		GAME,
 		PAUSE, 
@@ -181,15 +182,31 @@ public class Game extends Canvas implements Runnable {
 			if (konami == true){
 				Game.State = Game.STATE.GAME;
 			}
-			g.drawImage(selectionBG, 0, 0, null);
-			try {
-				characterSelection.render(g);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			else{
+				g.drawImage(selectionBG, 0, 0, null);
+				try {
+					characterSelection.render(g);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
-		}else if (State == STATE.SETTINGS){//If it's the MENU state, it will display the menu
+		}else if (State == STATE.GMSELECT){//If it's the MENU state, it will display the menu
+			if (konami == true){
+				Game.State = Game.STATE.GAME;
+			}
+			else{
+				g.drawImage(selectionBG, 0, 0, null);
+				try {
+					gamemodeSelection.render(g);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			}else if (State == STATE.SETTINGS){//If it's the MENU state, it will display the menu
 			g.drawImage(selectionBG, 0, 0, null);
 
 			Settings.render(g);

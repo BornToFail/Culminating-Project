@@ -44,7 +44,7 @@ public class HUD {
 
 		if(Game.konami == true){
 			
-			if (Game.hudTimer/100 % 50 == 0){
+			if (Game.hudTimer/100 % 100 == 0){
 				g.setFont(Konami);
 				g.setColor(Color.GREEN);
 				g.drawString("FOLLOW ISSA ON DEVIANTART FOR QUALITY CONTENT ", 50, 200);

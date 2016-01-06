@@ -2,6 +2,7 @@ package muzeyen.main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Enemy {
 	
@@ -12,6 +13,7 @@ public class Enemy {
 	private double VELY;
 	
 	private BufferedImage enemy;
+	static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
 
 	public Enemy(double X, double Y, Game game) {
 		this.X=X;
@@ -44,5 +46,9 @@ public class Enemy {
 	}
 	public void setVelY(double VELY){
 		this.VELY = VELY;
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(enemy, (int)X, (int)Y, null);
 	}
 }

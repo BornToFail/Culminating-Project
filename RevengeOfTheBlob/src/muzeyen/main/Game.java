@@ -52,6 +52,7 @@ public class Game extends Canvas implements Runnable {
 	int currentButton = 0;
 	private Player p;
 	private Controller c;
+	private Enemy e;
 
 
 	//initialize
@@ -174,6 +175,7 @@ public class Game extends Canvas implements Runnable {
 	
 		p.render(g);
 		c.render(g);
+		e.render(g);
 		}else if (State == STATE.MENU){//If it's the MENU state, it will display the menu
 			g.drawImage(menuBG_1, 0, 0, null);
 			g.drawImage(fennelSplash, 50, 100, null);

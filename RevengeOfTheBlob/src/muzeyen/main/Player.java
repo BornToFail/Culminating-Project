@@ -8,12 +8,14 @@ public class Player {
 	private double x; //x-cord of player
 	private double y; //y-cord of player
 	private int s; //Sprite position of player
+	
 	//used to make movement smother 
 	private double velX = 0;
 	private double velY = 0;
 	public static int lives = 3;
 	public static int bombs = 3;
-	private BufferedImage player;
+	public static int selectedCharacter = 1;
+	private static BufferedImage player;
 	
 	public Player(double x, double y, int s, Game game){
 		
@@ -23,10 +25,27 @@ public class Player {
 		this.s = s;
 
 		//received from getter method in Game class
-		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		
-		player = ss.grabImage(s, 1, 32, 32);
 	}
+	public static void setSprite(){
+		SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
+		SpriteSheet ssk = new SpriteSheet(Game.getSpriteSheetK());
+
+		
+		
+		if (Game.konami == true){
+			player = ssk.grabImage(1, 1, 32, 32);
+		}
+		else{
+		if (selectedCharacter == 1){
+			player = ss.grabImage(1, 1, 32, 32);
+		}else if (selectedCharacter == 2){
+			player = ss.grabImage(1, 2, 32, 32);
+		}else //if (selectedCharacter == 2){
+			player = ss.grabImage(1, 3, 32, 32);
+		}
+	}
+
 	
 	//update method
 	public void tick(){

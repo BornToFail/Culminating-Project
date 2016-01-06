@@ -58,6 +58,7 @@ public class MouseInput implements MouseListener {
 		}
 		}
 		if (Game.State == STATE.SELECT){
+
 			if(mx >= 30 && mx <= 230){
 				if(my >= 400 && my <= 450){
 					//Pressed Back button
@@ -66,7 +67,22 @@ public class MouseInput implements MouseListener {
 			}
 			if(mx >= 10 && mx <= 210){
 				if(my >= 50 && my <= 350){
-					//Selected OTTO
+					Player.selectedCharacter = 1;
+					Player.setSprite();
+					Game.State = Game.STATE.GAME;
+				}
+			}
+			if(mx >= 225 && mx <= 425){//Tests if the user selects fennel
+				if(my >= 50 && my <= 350){
+					Player.selectedCharacter = 2;
+					Player.setSprite();
+					Game.State = Game.STATE.GAME;
+				}
+			}
+			if(mx >= 445 && mx <= 500){//Tests if the user selects Perditus 
+				if(my >= 50 && my <= 350){
+					Player.selectedCharacter = 3;
+					Player.setSprite();
 					Game.State = Game.STATE.GAME;
 				}
 			}

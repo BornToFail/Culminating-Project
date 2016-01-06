@@ -5,14 +5,37 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class HUD {
+	private BufferedImage image = new BufferedImage(Game.WIDTH,Game.HEIGHT,BufferedImage.TYPE_INT_RGB); //buffers window
+	private static BufferedImage ottoFH = null;
+	private static BufferedImage ottoMH = null;
+	private static BufferedImage ottoLH = null;
+	private static BufferedImage fennFH = null;
+	private static BufferedImage blobFH = null;
+
 	public static  Rectangle hudFrame = new Rectangle(160,481, 500, 0);
 	
 
 	
 	public static void render(Graphics g){
 		Graphics2D g2d = (Graphics2D) g;
+		
+		BufferedImageLoader loader = new BufferedImageLoader();
+		try{
+			ottoFH = loader.loadImage("/ottoFullHealth.png");// Otto portrayed at full health
+			ottoMH = loader.loadImage("/ottoMidHealth.png");// Otto portrayed at mid health
+			ottoLH = loader.loadImage("/ottoLowHealth.png");// Otto portrayed at low health
+			
+			fennFH = loader.loadImage("/fennFullHealth.png");// Fennel portrayed at low health
+
+			blobFH = loader.loadImage("/blobFullHealth.png");// Blob portrayed at full health
+
+		}catch(IOException e){
+			e.printStackTrace();	
+		}
 		
 		Font fntL = new Font("arial", Font.BOLD, 15);
 //		Font fntSub = new Font("arial",Font.ITALIC ,25);
@@ -22,14 +45,35 @@ public class HUD {
 		g.setColor(Color.WHITE);
 		
 		String livesLeft = "";
+		
 		if (Player.lives == 3){
+			if (Game.konami == true){
+				g.drawImage(blobFH, 501, 0, null);
+				}
+				
+			else{
 			livesLeft = "* * *";
-	
-		}else if (Player.lives == 2){
+			if (Player.selectedCharacter == 1){
+			g.drawImage(ottoFH, 501, 0, null);
+			}
+			else if (Player.selectedCharacter == 2){
+				g.drawImage(fennFH, 501, 0, null);
+			}
+			}
+			}
+		else if (Player.lives == 2){
 			livesLeft ="* *";
+			if (Game.konami == true){
+				
+			}
+			else{
+			g.drawImage(ottoMH, 501, 0, null);
+			}
 	
 		}else if (Player.lives == 1){
 			livesLeft ="*";
+			g.drawImage(ottoLH, 501, 0, null);
+
 		}
 		g.drawString("Lives "+ livesLeft, 510, 175);
 		g.drawString("Bombs "+ Player.bombs, 510, 225);

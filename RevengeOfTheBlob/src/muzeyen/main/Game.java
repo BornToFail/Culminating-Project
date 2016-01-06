@@ -36,18 +36,19 @@ public class Game extends Canvas implements Runnable {
 	public static STATE State = STATE.MENU;
 
 	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB); //buffers window
-	private BufferedImage spriteSheet = null;
+	private static BufferedImage spriteSheet = null;
+	private static BufferedImage spriteSheetK = null;
 	private BufferedImage background = null;
 	private BufferedImage menuBG_1 = null;
 	private BufferedImage fennelSplash = null;
 	private BufferedImage pauseOverlay = null;
 	private BufferedImage selectionBG = null;
-	private BufferedImage selectionF = null;
-	private BufferedImage selectionO = null;
+
 	private BufferedImage hudRight = null;
 	private boolean shooting = false;
-    static int ottoState = 1;
-
+	public static boolean konami = false;
+	int[] sequence = {38, 38, 40, 40, 37, 39, 37, 39, 66, 65};
+	int currentButton = 0;
 	private Player p;
 	private Controller c;
 
@@ -58,13 +59,13 @@ public class Game extends Canvas implements Runnable {
 		BufferedImageLoader loader = new BufferedImageLoader();
 		try{
 			spriteSheet = loader.loadImage("/sprite_sheet_new.png");
+			spriteSheetK = loader.loadImage("/sprite_sheet.png");
 			background = loader.loadImage("/background.png");
 			menuBG_1 = loader.loadImage("/menuBackground_1.png");
 			selectionBG = loader.loadImage("/selectionBackground_1.png");
 			fennelSplash = loader.loadImage("/fennel.png");
 			pauseOverlay = loader.loadImage("/pauseOverlay.png");
-			selectionF = loader.loadImage("/selectionF.png");
-			selectionO = loader.loadImage("/selectionO.png");
+
 			hudRight = loader.loadImage("/HUD_Side_Display.png");
 
 		}catch(IOException e){
@@ -177,11 +178,16 @@ public class Game extends Canvas implements Runnable {
 			g.drawImage(fennelSplash, 50, 100, null);
 			menu.render(g);
 		}else if (State == STATE.SELECT){//If it's the MENU state, it will display the menu
+			if (konami == true){
+				Game.State = Game.STATE.GAME;
+			}
 			g.drawImage(selectionBG, 0, 0, null);
-			g.drawImage(selectionF, 225, 50, null);
-			g.drawImage(selectionO, 10, 50, null);
-
-			characterSelection.render(g);
+			try {
+				characterSelection.render(g);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}else if (State == STATE.SETTINGS){//If it's the MENU state, it will display the menu
 			g.drawImage(selectionBG, 0, 0, null);
@@ -227,36 +233,34 @@ public class Game extends Canvas implements Runnable {
 				paused = true;
 			}
 		}	
+		if (State == STATE.MENU){
+			System.out.println(key);
+
+			if (key == sequence[currentButton]){
+				currentButton++;
+				if(currentButton == sequence.length){
+					System.out.print("ACCESS GRANTED");
+					this.konami = true;
+					Player.setSprite();
+					currentButton = 0; 
+						
+				}
+			}
+			else{
+				currentButton = 0;
+			}
+			
+		}
 	}
+	
 	
 
 	public void keyReleased(KeyEvent e){
 		
 		
 		int key = e.getKeyCode();
-		if (State == STATE.MENU){
-			boolean Konami1 = false;
-			boolean Konami2 = false;
-			boolean Konami3 = false;
-			boolean Konami4 = false;
-			boolean Konami5 = false;
-			boolean Konami6 = false;
-			boolean Konami7 = false;
-			boolean Konami8 = false;
-			boolean Konami9 = false;
-			boolean Konami10 = false;
-			boolean Konami11 = false;
-			if (key == KeyEvent.VK_UP){
-				Konami1 = true;
-			}
-			if (key == KeyEvent.VK_UP && Konami1 == true){
-				Konami2 = true;
-			}
-			if (key == KeyEvent.VK_DOWN && Konami2 == true){
-			    Konami3 = true;}
-			}
-	
-		else if (State == STATE.GAME){
+		
+		 if (State == STATE.GAME){
 
 
 			if (key == KeyEvent.VK_RIGHT){
@@ -264,15 +268,12 @@ public class Game extends Canvas implements Runnable {
 			}
 			else if (key == KeyEvent.VK_LEFT){
 				p.setVelX(0);
-				ottoState = 1;
 			}
 			else if (key == KeyEvent.VK_DOWN){
 				p.setVelY(0);
-				ottoState = 1;
 			}
 			else if (key == KeyEvent.VK_UP){
 				p.setVelY(0);
-				ottoState = 1;
 			}
 			else if (key == KeyEvent.VK_SPACE){
 				shooting = false;
@@ -302,9 +303,11 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	//method that passes spriteSheet to player class
-	public BufferedImage getSpriteSheet(){
+	public static BufferedImage getSpriteSheet(){
 		return spriteSheet;
 	}
-
+	public static BufferedImage getSpriteSheetK(){
+		return spriteSheetK;
+	}
 
 }

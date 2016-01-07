@@ -231,9 +231,11 @@ public class Game extends Canvas implements Runnable {
 		if (State == STATE.GAME){
 			if (key == KeyEvent.VK_RIGHT){
 				p.setVelX(5);
+				Player.tiltRight();
 			}
 			else if (key == KeyEvent.VK_LEFT){
 				p.setVelX(-5);
+				Player.tiltLeft();
 			}
 			else if (key == KeyEvent.VK_DOWN){
 				p.setVelY(5);
@@ -282,9 +284,12 @@ public class Game extends Canvas implements Runnable {
 
 			if (key == KeyEvent.VK_RIGHT){
 				p.setVelX(0);
+				Player.setSprite();
+
 			}
 			else if (key == KeyEvent.VK_LEFT){
 				p.setVelX(0);
+				Player.setSprite();
 			}
 			else if (key == KeyEvent.VK_DOWN){
 				p.setVelY(0);

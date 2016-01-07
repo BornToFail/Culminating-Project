@@ -14,11 +14,8 @@ private static BufferedImage titleText = null;
 private static BufferedImage selectionF = null;
 private static BufferedImage selectionO = null;
 private static BufferedImage selectionP = null;	
-public static  Rectangle backButton = new Rectangle(30,400, 200, 50);
-public static Rectangle ottoButton = new Rectangle(10,50, 200, 300);
-public static Rectangle fennelButton = new Rectangle(225,50, 200, 300);
-public static Rectangle perditusButton = new Rectangle(440,50, 200, 300);
-
+private static BufferedImage backButton = null;
+public static String overlay ="";
 
 
 public static void render(Graphics g) throws IOException{
@@ -31,6 +28,7 @@ public static void render(Graphics g) throws IOException{
 		selectionF = loader.loadImage("/selectionF.png");
 		selectionO = loader.loadImage("/selectionO.png");
 		selectionP = loader.loadImage("/selectionP.png");
+		backButton = loader.loadImage("/backButton.png");
 
 	}catch(IOException e){
 		e.printStackTrace();	
@@ -47,20 +45,17 @@ public static void render(Graphics g) throws IOException{
 
 	g.setFont(fntBTF);
 	g.drawString("Game © Born To Fail 2016 ", 520, 475);
-	
+	g.drawString(overlay, 500, 400);
 	g.setFont(fntSub);
-	g.drawString("Back", backButton.x+25,backButton.y+33);
 	//g.drawString("Settings", settingsButton.x+25,settingsButton.y+33);
 	//g.drawString("Quit", quitButton.x+25,quitButton.y+33);
 	g.drawImage(selectionO, 10, 50, null);
 	g.drawImage(selectionF, 225, 50, null);
 	g.drawImage(selectionP, 440, 50, null);
-}
-public static void ottoOverlay(Graphics g){
-	Font fnt = new Font("arial", Font.BOLD, 40);
-	g.setFont(fnt);
-	g.setColor(Color.WHITE);
-	g.drawString("OTTO", 150, 325);
+	g.drawImage(backButton, 30, 400, null);
+	
+	
 
 }
 }
+

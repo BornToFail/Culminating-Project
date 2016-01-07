@@ -12,15 +12,20 @@ public class Enemy {
 	private double VELX;
 	private double VELY;
 	
-	private BufferedImage enemy;
-	static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
+	private static BufferedImage enemy;
+	//static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
 
 	public Enemy(double X, double Y, Game game) {
 		this.X=X;
 		this.Y=Y;
 		
-		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
-		enemy=ss.grabImage(1, 5, 32, 32);
+		
+	}
+	
+	public static void setSprite(){
+		SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
+		enemy = ss.grabImage(5, 1, 32, 32);
+
 	}
 
 	public void tick(){

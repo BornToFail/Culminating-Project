@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -52,9 +53,10 @@ public class Game extends Canvas implements Runnable {
 	int currentButton = 0;
 	private Player p;
 	private Controller c;
-	private Enemy e;
+	private static Enemy e;
 
-
+	static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
+	
 	//initialize
 	public void init(){
 		requestFocus(); //makes it so user doesn't have to press game to begin playing when it launces
@@ -107,6 +109,16 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();
 		}
 		System.exit(1);
+	}
+	
+	
+	public static void EnemyBehaviour(){
+		if(State == STATE.GAME ){
+			for (int i=0;i<25;i++){
+				e=new Enemy (250,250, null );
+			}
+
+		}
 	}
 
 

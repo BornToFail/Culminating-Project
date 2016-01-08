@@ -115,7 +115,8 @@ public class Game extends Canvas implements Runnable {
 	public static void EnemyBehaviour(){
 		if(State == STATE.GAME ){
 			for (int i=0;i<25;i++){
-				e=new Enemy (250,250, null );
+				e=new Enemy (250,1, null );
+				
 			}
 
 		}

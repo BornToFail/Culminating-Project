@@ -20,11 +20,13 @@ public class Enemy {
 		this.Y=Y;
 		
 		
+		
+		
 	}
 	
 	public static void setSprite(){
 		SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
-		enemy = ss.grabImage(5, 1, 32, 32);
+		enemy = ss.grabImage(4, 1, 32, 32);
 
 	}
 

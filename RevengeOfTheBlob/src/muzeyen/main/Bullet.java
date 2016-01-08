@@ -17,8 +17,6 @@ public class Bullet {
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		SpriteSheet ssk = new SpriteSheet(game.getSpriteSheetK());
 		if (Game.konami == false){
-		System.out.println(Player.selectedCharacter);
-
 		image = ss.grabImage(5, Player.selectedCharacter, 32, 32);
 		}
 		else if (Game.konami == true){

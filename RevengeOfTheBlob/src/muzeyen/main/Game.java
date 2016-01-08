@@ -24,11 +24,13 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private Menu menu;
 	static boolean paused = false;
+	public static int FPS;
 	
 	public static enum STATE{
 		MENU,
 		SELECT, //Character Selection menu
 		GMSELECT,//Game Mode Selection menu
+		CUTSCENE_1,
 		SETTINGS,
 		GAME,
 		PAUSE, 
@@ -136,6 +138,7 @@ public class Game extends Canvas implements Runnable {
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
 				System.out.println(updates + " Ticks, FPS " + frames);
+			    FPS = frames;
 				updates = 0;
 				frames = 0;
 			}
@@ -167,13 +170,22 @@ public class Game extends Canvas implements Runnable {
 		//////////////////////////////
 		if (State == STATE.GAME){
 
-		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-		g.drawImage(background, 0, 0, null);
-		g.drawImage(hudRight, 500, 0, null);
-		HUD.render(g);
-	
-		p.render(g);
-		c.render(g);
+			g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+			g.drawImage(background, 0, 0, null);
+			g.drawImage(hudRight, 500, 0, null);
+			HUD.render(g);
+
+			p.render(g);
+			c.render(g);
+		}else if (State == STATE.CUTSCENE_1){
+			g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+			g.drawImage(background, 0, 0, null);
+			g.drawImage(hudRight, 500, 0, null);
+			HUD.render(g);
+			cutScenes.render(g);
+
+			p.render(g);
+			c.render(g);
 		}else if (State == STATE.MENU){//If it's the MENU state, it will display the menu
 			g.drawImage(menuBG_1, 0, 0, null);
 			g.drawImage(fennelSplash, 50, 100, null);
@@ -245,7 +257,22 @@ public class Game extends Canvas implements Runnable {
 			}	
 			else if (key == KeyEvent.VK_SPACE && !shooting){
 				shooting = true;
-				c.addBullet(new Bullet(p.getX(), p.getY(), this));
+				if (Player.selectedCharacter == 1){
+					c.addBullet(new Bullet(p.getX()+3, p.getY(), this));
+					c.addBullet(new Bullet(p.getX()-3, p.getY(), this));
+				}
+				else if (Player.selectedCharacter == 2){
+					c.addBullet(new Bullet(p.getX(), p.getY(), this));
+					c.addBullet(new Bullet(p.getX(), p.getY(), this));
+
+				}
+				else{ //if (Player.selectedCharacter == 3)
+					c.addBullet(new Bullet(p.getX(), p.getY(), this));
+					c.addBullet(new Bullet(p.getX(), p.getY(), this));
+
+				}
+
+
 			}	
 			else if (key == KeyEvent.VK_BACK_SPACE&&paused == false){
 				Game.State = Game.STATE.PAUSE;
@@ -270,6 +297,7 @@ public class Game extends Canvas implements Runnable {
 			}
 			
 		}
+
 	}
 	
 	
@@ -301,6 +329,9 @@ public class Game extends Canvas implements Runnable {
 				shooting = false;
 			}
 		}
+		 else if (State == STATE.CUTSCENE_1){
+			 cutScenes.cutscene_F ++;
+		 }
 	}
 
 	public static void main(String args[]){

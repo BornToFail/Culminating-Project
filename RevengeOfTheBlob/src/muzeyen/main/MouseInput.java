@@ -9,7 +9,7 @@ import java.awt.event.MouseListener;
 
 import muzeyen.main.Game.STATE;
 public class MouseInput implements MouseListener {
-
+    static int mode = 0;
 	@Override
 	
 	public void mouseClicked(MouseEvent e) {
@@ -59,6 +59,13 @@ public class MouseInput implements MouseListener {
 					//Pressed "MEDIUM SURVIVAL" button
 					System.out.println("Iwork");
 					Game.State = Game.STATE.GAME;
+				}
+			}
+			if(mx >= 100 && mx <= 151){
+				if(my >= 125 && my <= 146){
+					//Pressed "MEDIUM STORY" button
+					mode = 1;
+					Game.State = Game.STATE.CUTSCENE_1;
 				}
 			}
 			if(mx >= 400 && mx <= 551){

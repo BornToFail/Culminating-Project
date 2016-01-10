@@ -42,10 +42,10 @@ public class Player {
 		
 	}
 	public static void tiltRight(){
-		player = ss.grabImage(3,1,32,32);
+		player = ss.grabImage(3,selectedCharacter,32,32);
 	}
 	public static void tiltLeft(){
-		player = ss.grabImage(2,1,32,32);
+		player = ss.grabImage(2,selectedCharacter,32,32);
 	}
 	
 	//update method

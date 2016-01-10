@@ -5,15 +5,25 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Menu {
-	
-public  Rectangle playButton = new Rectangle(500,200, 200, 50);
-public  Rectangle settingsButton = new Rectangle(500,300, 200, 50);
-public  Rectangle quitButton = new Rectangle(500,400, 200, 50);
+private BufferedImage image = new BufferedImage(Game.WIDTH,Game.HEIGHT,BufferedImage.TYPE_INT_RGB); //buffers window
+private static BufferedImage playButton = null;
+private static BufferedImage settingsButton = null;
+private static BufferedImage quitButton = null;
 
 public void render(Graphics g){
 	Graphics2D g2d = (Graphics2D) g;
+	BufferedImageLoader loader = new BufferedImageLoader();
+	try{
+		playButton = loader.loadImage("/playButton.png");// The play button
+		settingsButton = loader.loadImage("/settingsButton.png");
+		quitButton = loader.loadImage("/quitButton.png");
+	}catch(IOException e){
+		e.printStackTrace();	
+	}
 	
 	Font fnt0 = new Font("arial", Font.BOLD, 100);
 	Font fntSub = new Font("arial",Font.ITALIC ,25);
@@ -26,15 +36,11 @@ public void render(Graphics g){
 	g.drawString(">>Main Menu", 400, 150);
 	g.setFont(fntBTF);
 	g.drawString("Game © Born To Fail 2016 ", 520, 475);
+	g.drawImage(playButton, 460, 200, null);
+	g.drawImage(settingsButton, 460, 300, null);
+	g.drawImage(quitButton, 460, 400, null);
 
-	g.setFont(fntSub);
-	g.drawString("Play", playButton.x+25,playButton.y+33);
-	g.drawString("Settings", settingsButton.x+25,settingsButton.y+33);
-	g.drawString("Quit", quitButton.x+25,quitButton.y+33);
-	g2d.draw(playButton);
-	g2d.draw(settingsButton);
-	g2d.draw(quitButton);
-	
+
 	
 }
 }

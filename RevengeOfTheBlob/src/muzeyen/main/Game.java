@@ -54,6 +54,7 @@ public class Game extends Canvas implements Runnable {
 	int currentButton = 0;
 	private Player p;
 	private Controller c;
+	private Controller testC;
 
 
 	//initialize
@@ -79,6 +80,7 @@ public class Game extends Canvas implements Runnable {
 		
 		p = new Player(200,200, 1 ,this); //initializes player with x-cord and y-cord 200 and the state of the player sprite\
 		c = new Controller(this);
+		testC = new Controller(this);
 		menu = new Menu();
 		
 		fennelSplash.getScaledInstance(fennelSplash.getWidth()/3, fennelSplash.getHeight()/3, Image.SCALE_DEFAULT);
@@ -177,6 +179,8 @@ public class Game extends Canvas implements Runnable {
 
 			p.render(g);
 			c.render(g);
+			testC.render(g);
+
 		}else if (State == STATE.CUTSCENE_1){
 			g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 			g.drawImage(background, 0, 0, null);
@@ -192,6 +196,7 @@ public class Game extends Canvas implements Runnable {
 			menu.render(g);
 		}else if (State == STATE.SELECT){//If it's the MENU state, it will display the menu
 			if (konami == true){
+				KonamiMusic.playMusic();
 				Game.State = Game.STATE.GAME;
 			}
 			else{
@@ -270,6 +275,21 @@ public class Game extends Canvas implements Runnable {
 					c.addBullet(new Bullet(p.getX(), p.getY(), this));
 					c.addBullet(new Bullet(p.getX(), p.getY(), this));
 
+				}
+
+
+			}	
+			else if (key == KeyEvent.VK_Z && !shooting){
+				shooting = true;
+				if (Player.selectedCharacter == 1){
+					testC.addBullet(new Bullet(p.getX()+3, p.getY(), this));
+				}
+				else if (Player.selectedCharacter == 2){
+					testC.addBullet(new Bullet(p.getX(), p.getY(), this));
+
+				}
+				else{ //if (Player.selectedCharacter == 3)
+					testC.addBullet(new Bullet(p.getX(), p.getY(), this));
 				}
 
 

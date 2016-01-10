@@ -25,7 +25,9 @@ public class Game extends Canvas implements Runnable {
 	private Menu menu;
 	static boolean paused = false;
 	public static int FPS;
-	
+	public static boolean sounds = true;
+	public static boolean music = true;
+
 	public static enum STATE{
 		MENU,
 		SELECT, //Character Selection menu

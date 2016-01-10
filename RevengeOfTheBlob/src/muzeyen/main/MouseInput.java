@@ -132,6 +132,34 @@ public class MouseInput implements MouseListener {
 					Game.State = Game.STATE.MENU;
 				}
 			}
+			if(mx >= 25 && mx <= 230){
+				if(my >= 130 && my <= 175){
+					//Toggled sound button
+					if (Game.sounds == true){
+						Game.sounds = false;
+						Settings.update();
+					}
+					else{
+						Game.sounds = true;
+						Settings.update();
+					}
+
+				}
+			}
+			if(mx >= 25 && mx <= 230){
+				if(my >= 90 && my <= 125){
+					//Toggled music button
+					if (Game.music == true){
+						Game.music = false;
+						Settings.update();
+					}
+					else{
+						Game.music = true;
+						Settings.update();
+					}
+			
+				}
+			}
 		}
 	
 		if (Game.State == STATE.PAUSE){

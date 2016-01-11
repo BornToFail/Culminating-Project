@@ -11,12 +11,10 @@ import java.io.IOException;
 public class Settings {
 	private BufferedImage image = new BufferedImage(Game.WIDTH,Game.HEIGHT,BufferedImage.TYPE_INT_RGB); //buffers window
 	private static BufferedImage titleText = null;
-
+	public static String musicStatus;
+	public static String soundStatus;
 		
 	public static  Rectangle backButton = new Rectangle(30,400, 200, 50);
-	public static Rectangle ottoButton = new Rectangle(10,50, 200, 300);
-	public static Rectangle fennelButton = new Rectangle(225,50, 200, 300);
-	public static Rectangle perditusButton = new Rectangle(440,50, 200, 300);
 
 
 	public static void render(Graphics g){
@@ -41,13 +39,32 @@ public class Settings {
 		g.drawString("Game © Born To Fail 2016 ", 520, 475);
 		
 		g.setFont(fntSub);
+		update();
+		g.drawString(musicStatus, 25,100);
+		g.drawString(soundStatus, 25,150);
+
+		
+
+
 		//g.drawString("Back", backButton.x+25,backButton.y+33);
 		//g.drawString("Settings", settingsButton.x+25,settingsButton.y+33);
 		//g.drawString("Quit", quitButton.x+25,quitButton.y+33);
 		g2d.draw(backButton);
-		g2d.draw(ottoButton);
-		g2d.draw(fennelButton);
-		g2d.draw(perditusButton);
+	}
+	public static void update(){
+		if (Game.sounds == true){
+		   soundStatus = "Sounds: On";
+		}
+		if (Game.sounds == false){
+		   soundStatus = "Sounds: Off";
+		}
+		
+		if (Game.music == true){
+			musicStatus = "Music: On";
+		}
+		if (Game.music == false){
+			musicStatus = "Music: Off";
+		}
 	}
 
 }

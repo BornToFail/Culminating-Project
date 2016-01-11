@@ -21,8 +21,8 @@ public class gamemodeSelection {
 	private static BufferedImage difficultyMedS = null;
 	private static BufferedImage difficultyHardS = null;
 	private static BufferedImage difficultyInsaneS = null;
+	private static BufferedImage backButton = null;
 
-	public static  Rectangle backButton = new Rectangle(30,400, 200, 50);
 
 
 
@@ -42,6 +42,7 @@ public class gamemodeSelection {
 			difficultyMedSM = loader.loadImage("/difficultyMed.png");
 			difficultyHardSM = loader.loadImage("/difficultyHard.png");
 			difficultyInsaneSM = loader.loadImage("/difficultyInsane.png");
+			backButton = loader.loadImage("/backButton.png");
 
 		}catch(IOException e){
 			e.printStackTrace();	
@@ -63,12 +64,11 @@ public class gamemodeSelection {
 		g.drawImage(difficultyMedSM, 100, 125, null);
 		g.drawImage(difficultyHardSM, 100, 225, null);
 		g.drawImage(difficultyInsaneSM, 100, 325, null);
+		g.drawImage(backButton, 30, 400, null);
 
 		g.setFont(fntBTF);
 		g.drawString("Game © Born To Fail 2016 ", 520, 475);
 		
-		g.setFont(fntSub);
-		g.drawString("Back", backButton.x+25,backButton.y+33);
 		//g.drawString("Settings", settingsButton.x+25,settingsButton.y+33);
 		//g.drawString("Quit", quitButton.x+25,quitButton.y+33);
 

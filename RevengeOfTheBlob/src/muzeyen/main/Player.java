@@ -16,6 +16,8 @@ public class Player {
 	public static int bombs = 3;
 	public static int selectedCharacter = 1;
 	private static BufferedImage player;
+	static SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
+	static SpriteSheet ssk = new SpriteSheet(Game.getSpriteSheetK());
 	
 	public Player(double x, double y, int s, Game game){
 		
@@ -28,24 +30,23 @@ public class Player {
 		
 	}
 	public static void setSprite(){
-		SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
-		SpriteSheet ssk = new SpriteSheet(Game.getSpriteSheetK());
 
-		
+
 		
 		if (Game.konami == true){
 			player = ssk.grabImage(1, 1, 32, 32);
 		}
 		else{
-		if (selectedCharacter == 1){
-			player = ss.grabImage(1, 1, 32, 32);
-		}else if (selectedCharacter == 2){
-			player = ss.grabImage(1, 2, 32, 32);
-		}else //if (selectedCharacter == 2){
-			player = ss.grabImage(1, 3, 32, 32);
+			player = ss.grabImage(1, selectedCharacter, 32, 32);
 		}
+		
 	}
-
+	public static void tiltRight(){
+		player = ss.grabImage(3,selectedCharacter,32,32);
+	}
+	public static void tiltLeft(){
+		player = ss.grabImage(2,selectedCharacter,32,32);
+	}
 	
 	//update method
 	public void tick(){

@@ -27,11 +27,11 @@ public class HUD {
 		try{
 			ottoFH = loader.loadImage("/ottoFullHealth.png");// Otto portrayed at full health
 			ottoMH = loader.loadImage("/ottoMidHealth.png");// Otto portrayed at mid health
-			ottoLH = loader.loadImage("/ottoLowHealth.png");// Otto portrayed at low health
+			//ottoLH = loader.loadImage("/ottoLowHealth.png");// Otto portrayed at low health
 			
 			fennFH = loader.loadImage("/fennFullHealth.png");// Fennel portrayed at low health
 
-			blobFH = loader.loadImage("/blobFullHealth.png");// Blob portrayed at full health
+			//blobFH = loader.loadImage("/blobFullHealth.png");// Blob portrayed at full health
 
 		}catch(IOException e){
 			e.printStackTrace();	
@@ -55,7 +55,7 @@ public class HUD {
 		}
 		String livesLeft = "";
 		
-		if (Player.lives == 3){
+		if (Player.lives >= 3){
 			if (Game.konami == true){
 				g.drawImage(blobFH, 501, 0, null);
 				}
@@ -84,14 +84,21 @@ public class HUD {
 			g.drawImage(ottoLH, 501, 0, null);
 
 		}
+		else{// (Player.lives <= 1)
+			//check if it's in highscores
+			//if it is, prompt them to add their name to save score
+			//if not gameover screen
+
+		}
     	g.setFont(fntL);
 		g.setColor(Color.WHITE);
 		g.drawString("Lives "+ livesLeft, 510, 175);
 		g.drawString("Bombs "+ Player.bombs, 510, 225);
-		g.drawString("Time "+ Game.hudTimer/100, 510, 275);
+		g.drawString("Time "+ Game.hudTimer/100, 520, 275);
     	g.setFont(fntBTF);
-
-	    g.drawString("Game © Born To Fail 2016 ", 520, 475);
+    	int fps = Game.FPS;
+	    g.drawString("FPS " + Integer.toString(fps), 540, 425);
+	    g.drawString("Game © Born To Fail 2016 ", 540, 475);
 
 //		g.setFont(fntSub);
 		//g.drawString("Play", playButton.x+25,playButton.y+33);

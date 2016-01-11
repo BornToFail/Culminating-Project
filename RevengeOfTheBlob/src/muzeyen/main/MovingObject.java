@@ -10,11 +10,11 @@ import java.awt.Graphics;
 
 public abstract class MovingObject implements Runnable {
 	
-	protected double x;
-	protected double y;
+	private double x;
+	private double y;
 	
-	protected double xSpeed;
-	protected double ySpeed;
+	private double xSpeed;
+	private double ySpeed;
 	
 	private int PauseDuration;
 	
@@ -23,8 +23,8 @@ public abstract class MovingObject implements Runnable {
 	public MovingObject(double x, double y, double xSpeed, double ySpeed) {
 		this.PauseDuration = 40;
 		
-		this.xSpeed=0;
-		this.ySpeed=0;
+		this.setxSpeed(0);
+		this.setySpeed(0);
 		
 		this.x=x;
 		this.y=y;
@@ -46,8 +46,8 @@ public abstract class MovingObject implements Runnable {
 	public void run() {
 		while (moving) {
 			animateOneStep();
-			x += xSpeed;
-			y += ySpeed;
+			x += getxSpeed();
+			y += getySpeed();
 			//if (x >= right | x <= left)
 				//xSpeed *= -1;
 			//if (y >= bottom | y <= top)
@@ -70,6 +70,35 @@ public abstract class MovingObject implements Runnable {
 	public double getY() {
 		return y;
 	}
+	
+	public void setX(double x) {
+		this.x = x;
+	}
+	
+	public void setY(double y){
+		this.y=y;
+	}
+	
+	public double getxSpeed() {
+		return xSpeed;
+	}
+
+
+	public void setxSpeed(double xSpeed) {
+		this.xSpeed = xSpeed;
+	}
+
+
+	public double getySpeed() {
+		return ySpeed;
+	}
+
+
+	public void setySpeed(double ySpeed) {
+		this.ySpeed = ySpeed;
+	}
+	
+	
 	
 	
 }

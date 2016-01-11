@@ -198,7 +198,6 @@ public class Game extends Canvas implements Runnable {
 			menu.render(g);
 		}else if (State == STATE.SELECT){//If it's the MENU state, it will display the menu
 			if (konami == true){
-				KonamiMusic.playMusic();
 				Game.State = Game.STATE.GAME;
 			}
 			else{

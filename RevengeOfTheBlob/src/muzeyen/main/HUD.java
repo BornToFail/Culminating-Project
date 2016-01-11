@@ -27,11 +27,11 @@ public class HUD {
 		try{
 			ottoFH = loader.loadImage("/ottoFullHealth.png");// Otto portrayed at full health
 			ottoMH = loader.loadImage("/ottoMidHealth.png");// Otto portrayed at mid health
-			ottoLH = loader.loadImage("/ottoLowHealth.png");// Otto portrayed at low health
+			//ottoLH = loader.loadImage("/ottoLowHealth.png");// Otto portrayed at low health
 			
 			fennFH = loader.loadImage("/fennFullHealth.png");// Fennel portrayed at low health
 
-			blobFH = loader.loadImage("/blobFullHealth.png");// Blob portrayed at full health
+			//blobFH = loader.loadImage("/blobFullHealth.png");// Blob portrayed at full health
 
 		}catch(IOException e){
 			e.printStackTrace();	

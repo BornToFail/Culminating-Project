@@ -50,7 +50,6 @@ public class MouseInput implements MouseListener {
 			if(mx >= 30 && mx <= 230){
 				if(my >= 400 && my <= 450){
 					//Pressed Back button
-					System.out.println("Iwork");
 					Game.State = Game.STATE.SELECT;
 				}
 			}
@@ -105,20 +104,20 @@ public class MouseInput implements MouseListener {
 	public  Rectangle quitButton = new Rectangle(500,400, 200, 50);
 		 */
 		if (Game.State == STATE.MENU){
-			if(mx >= 500 && mx <= 700){
+			if(mx >= 460 && mx <= 700){
 				if(my >= 200 && my <= 250){
 					//Pressed Play button
 					Game.State = Game.STATE.SELECT;
 				}
 			}
 		
-			if(mx >= 500 && mx <= 700){
+			if(mx >= 460 && mx <= 700){
 				if(my >= 300 && my <= 350){
 					//Pressed settings button
 					Game.State = Game.STATE.SETTINGS;
 				}
 			}
-			if(mx >= 500 && mx <= 700){
+			if(mx >= 460 && mx <= 700){
 				if(my >= 400 && my <= 450){
 					//Pressed quit button
 					System.exit(1);
@@ -131,6 +130,34 @@ public class MouseInput implements MouseListener {
 				if(my >= 400 && my <= 450){
 					//Pressed Play button
 					Game.State = Game.STATE.MENU;
+				}
+			}
+			if(mx >= 25 && mx <= 230){
+				if(my >= 130 && my <= 175){
+					//Toggled sound button
+					if (Game.sounds == true){
+						Game.sounds = false;
+						Settings.update();
+					}
+					else{
+						Game.sounds = true;
+						Settings.update();
+					}
+
+				}
+			}
+			if(mx >= 25 && mx <= 230){
+				if(my >= 90 && my <= 125){
+					//Toggled music button
+					if (Game.music == true){
+						Game.music = false;
+						Settings.update();
+					}
+					else{
+						Game.music = true;
+						Settings.update();
+					}
+			
 				}
 			}
 		}

@@ -75,6 +75,10 @@ public class Boss {
 	}
 	
 	private void Moves(){
+		if (Game.shooting = true){
+			boss = ss.grabImage(50, 50, 32, 32);
+			
+		}
 		//Boss' movement method	
 			//If boss speed is fast
 				//Boss is visible
@@ -90,6 +94,11 @@ public class Boss {
 	
 	private void Shooting(){
 		//If boss shoots, player freezes for 2 seconds
+		/*For shooting
+		 * Loop that detects increasing angles of some
+		 * kind and shoots bullets every x degrees.
+		 * Bullets travel in straight lines.
+		 */
 	}
 		
 

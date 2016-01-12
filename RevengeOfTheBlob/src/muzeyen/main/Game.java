@@ -51,7 +51,7 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage selectionBG = null;
 
 	private BufferedImage hudRight = null;
-	private boolean shooting = false;
+	boolean shooting = false;
 	public static boolean konami = false;
 	int[] sequence = {38, 38, 40, 40, 37, 39, 37, 39, 66, 65};
 	int currentButton = 0;
@@ -225,7 +225,6 @@ public class Game extends Canvas implements Runnable {
 			menu.render(g);
 		}else if (State == STATE.SELECT){//If it's the MENU state, it will display the menu
 			if (konami == true){
-				KonamiMusic.playMusic();
 				Game.State = Game.STATE.GAME;
 			}
 			else{

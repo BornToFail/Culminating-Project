@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -28,7 +29,8 @@ public class Game extends Canvas implements Runnable {
 	public static int FPS;
 	public static boolean sounds = true;
 	public static boolean music = true;
-
+	static Random generator = new Random();
+	static int randSpawn = generator.nextInt(200)+ 1;
 	public static enum STATE{
 		MENU,
 		SELECT, //Character Selection menu
@@ -124,8 +126,8 @@ public class Game extends Canvas implements Runnable {
 	
 	public static void EnemyBehaviour(){
 		if(State == STATE.GAME ){
-			for (int i=0;i<25;i++){	
-				spawner.add(new Enemy(200,0,0,0,400,0));
+			for (int i=0;i<5;i++){	
+				spawner.add(new Enemy(randSpawn,0,0,0,400,0));
 				spawner.get(i).setxSpeed(2);
 				spawner.get(i).setySpeed(2);
 			}
@@ -158,7 +160,8 @@ public class Game extends Canvas implements Runnable {
 			}
 			render();
 			frames++;
-
+			EnemyBehaviour();
+			Enemy.testBorders();
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
 				System.out.println(updates + " Ticks, FPS " + frames);
@@ -255,7 +258,7 @@ public class Game extends Canvas implements Runnable {
 			
 			}else if (State == STATE.SETTINGS){//If it's the MENU state, it will display the menu
 			g.drawImage(selectionBG, 0, 0, null);
-
+			Settings.preLoad();
 			Settings.render(g);
 
 		}else if (State == STATE.PAUSE){//If it's the MENU state, it will display the pause screen

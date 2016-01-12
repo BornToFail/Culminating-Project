@@ -17,7 +17,7 @@ public class MouseInput implements MouseListener {
 		int mx = e.getX();
 		int my = e.getY();
 		if (Game.State == STATE.SELECT){
-
+			characterSelection.preLoad();
 			if(mx >= 30 && mx <= 230){
 				if(my >= 400 && my <= 450){
 					//Pressed Back button
@@ -61,7 +61,7 @@ public class MouseInput implements MouseListener {
 					//Pressed "MEDIUM SURVIVAL" button
 					System.out.println("Iwork");
 					Game.State = Game.STATE.GAME;
-
+					HUD.preload();
 					Game.EnemyBehaviour();
 
 				}
@@ -70,6 +70,7 @@ public class MouseInput implements MouseListener {
 				if(my >= 125 && my <= 146){
 					//Pressed "MEDIUM STORY" button
 					mode = 1;
+					HUD.preload();
 					Game.State = Game.STATE.CUTSCENE_1;
 
 				}
@@ -77,12 +78,14 @@ public class MouseInput implements MouseListener {
 			if(mx >= 400 && mx <= 551){
 				if(my >= 225 && my <= 246){
 					//Pressed "HARD SURVIVAL" button
+					HUD.preload();
 					Game.State = Game.STATE.GAME;
 				}
 			}
 			if(mx >= 400 && mx <= 551){
 				if(my >= 325 && my <= 346){
 					//Pressed "HARD SURVIVAL" button
+					HUD.preload();
 					Game.State = Game.STATE.GAME;
 				}
 			}

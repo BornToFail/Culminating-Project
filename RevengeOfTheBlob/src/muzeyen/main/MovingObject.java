@@ -13,8 +13,8 @@ public abstract class MovingObject implements Runnable {
 	private double x;
 	private double y;
 	
-	private double xSpeed;
-	private double ySpeed;
+	public static double xSpeed;
+	public double ySpeed;
 	
 	private int PauseDuration;
 	

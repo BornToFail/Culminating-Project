@@ -13,13 +13,10 @@ public class Settings {
 	private static BufferedImage titleText = null;
 	public static String musicStatus;
 	public static String soundStatus;
-		
+	
 	public static  Rectangle backButton = new Rectangle(30,400, 200, 50);
-
-
-	public static void render(Graphics g){
-		Graphics2D g2d = (Graphics2D) g;
-		
+	
+	public static void preLoad(){
 		BufferedImageLoader loader = new BufferedImageLoader();
 		try{
 			titleText = loader.loadImage("/settingsTitle.png");
@@ -27,6 +24,11 @@ public class Settings {
 		}catch(IOException e){
 			e.printStackTrace();	
 		}
+	}
+	public static void render(Graphics g){
+		Graphics2D g2d = (Graphics2D) g;
+		
+		
 		Font fnt0 = new Font("arial", Font.BOLD, 40);
 		Font fntSub = new Font("arial",Font.ITALIC ,25);
 		Font fntBTF = new Font("arial",Font.ITALIC ,10);

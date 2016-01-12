@@ -20,10 +20,28 @@ public class Enemy extends MovingObject {
 	}
 
 	public void tick(){
-		setX(getX() + getxSpeed());
-		setY(getY() + getySpeed());
+				setX(getX() + getxSpeed());
+				setY(getY() + getySpeed());
+
+		}
+		
+	public static void testBorders(){
+		for(int i = 0; i < Game.spawner.size(); i++){
+			if(Game.spawner.get(i).getX() >= 480){
+				Game.spawner.get(i).setxSpeed(-2);
+			}
+			else{
+				Game.spawner.get(i).setxSpeed(2);
+			}
+			
+			if(Game.spawner.get(i).getY() >= 300){
+				Game.spawner.remove(i);
+			}
+		}
+		
+
 	}
-	
+		
 	public void render(Graphics g) {
 		g.drawImage(enemy, (int)getX(), (int)getY(), null);
 	}

@@ -18,11 +18,7 @@ public class HUD {
 
 	public static  Rectangle hudFrame = new Rectangle(160,481, 500, 0);
 	
-
-	
-	public static void render(Graphics g){
-		Graphics2D g2d = (Graphics2D) g;
-		
+	public static void preload(){
 		BufferedImageLoader loader = new BufferedImageLoader();
 		try{
 			ottoFH = loader.loadImage("/ottoFullHealth.png");// Otto portrayed at full health
@@ -36,6 +32,13 @@ public class HUD {
 		}catch(IOException e){
 			e.printStackTrace();	
 		}
+	}
+
+	
+	public static void render(Graphics g){
+		Graphics2D g2d = (Graphics2D) g;
+		
+		
 		Font Konami = new Font("Comic Sans MS", Font.PLAIN, 15);
 		Font fntL = new Font("arial", Font.BOLD, 15);
 //		Font fntSub = new Font("arial",Font.ITALIC ,25);

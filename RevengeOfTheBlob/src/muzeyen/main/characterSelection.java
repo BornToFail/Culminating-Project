@@ -17,11 +17,7 @@ private static BufferedImage selectionP = null;
 private static BufferedImage backButton = null;
 public static String overlay ="";
 
-
-public static void render(Graphics g) throws IOException{
-
-	Graphics2D g2d = (Graphics2D) g;
-	
+public static void preLoad(){
 	BufferedImageLoader loader = new BufferedImageLoader();
 	try{
 		titleText = loader.loadImage("/characterSelectText.png");
@@ -33,6 +29,10 @@ public static void render(Graphics g) throws IOException{
 	}catch(IOException e){
 		e.printStackTrace();	
 	}
+}
+
+public static void render(Graphics g) throws IOException{
+
 
 	
 	Font fnt0 = new Font("arial", Font.BOLD, 40);

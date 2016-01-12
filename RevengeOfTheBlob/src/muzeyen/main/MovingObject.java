@@ -19,8 +19,11 @@ public abstract class MovingObject implements Runnable {
 	private int PauseDuration;
 	
 	private boolean moving;
+	
+	private int right;
+	private int top;
 
-	public MovingObject(double x, double y, double xSpeed, double ySpeed) {
+	public MovingObject(double x, double y, double xSpeed, double ySpeed, int right, int top) {
 		this.PauseDuration = 40;
 		
 		this.setxSpeed(0);
@@ -28,6 +31,9 @@ public abstract class MovingObject implements Runnable {
 		
 		this.x=x;
 		this.y=y;
+		
+		this.right=right;
+		this.top=top;
 		StartThread();
 		
 	}
@@ -48,10 +54,10 @@ public abstract class MovingObject implements Runnable {
 			animateOneStep();
 			x += getxSpeed();
 			y += getySpeed();
-			//if (x >= right | x <= left)
-				//xSpeed *= -1;
-			//if (y >= bottom | y <= top)
-				//ySpeed *= -1;
+			if (x >= right )
+				xSpeed *= -1;
+			if ( y <= top)
+				ySpeed *= -1;
 			try {
 				Thread.sleep(PauseDuration);
 			} catch (InterruptedException e) {
@@ -97,8 +103,5 @@ public abstract class MovingObject implements Runnable {
 	public void setySpeed(double ySpeed) {
 		this.ySpeed = ySpeed;
 	}
-	
-	
-	
-	
+
 }

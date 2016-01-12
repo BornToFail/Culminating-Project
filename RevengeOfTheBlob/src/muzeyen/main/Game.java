@@ -49,6 +49,8 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage fennelSplash = null;
 	private BufferedImage pauseOverlay = null;
 	private BufferedImage selectionBG = null;
+	
+	//int enemys=6;
 
 	private BufferedImage hudRight = null;
 	boolean shooting = false;
@@ -123,9 +125,9 @@ public class Game extends Canvas implements Runnable {
 	public static void EnemyBehaviour(){
 		if(State == STATE.GAME ){
 			for (int i=0;i<25;i++){	
-				spawner.add(new Enemy(200,0,0,0));
-				spawner.get(i).setxSpeed(1);
-				spawner.get(i).setySpeed(1);
+				spawner.add(new Enemy(200,0,0,0,400,0));
+				spawner.get(i).setxSpeed(2);
+				spawner.get(i).setySpeed(2);
 			}
 			
 

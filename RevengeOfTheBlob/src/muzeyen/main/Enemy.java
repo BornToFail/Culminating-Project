@@ -2,47 +2,37 @@ package muzeyen.main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-public class Enemy {
+public class Enemy extends MovingObject {
 	
-	private double X;
-	private double Y;
 	
-	private double VELX;
-	private double VELY;
-	
-	private BufferedImage enemy;
+	private static BufferedImage enemy;
+	//static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
 
-	public Enemy(double X, double Y, Game game) {
-		this.X=X;
-		this.Y=Y;
-		
-		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
-		enemy=ss.grabImage(1, 5, 32, 32);
+	public Enemy (double x, double y, double xSpeed, double ySpeed, int right, int top) {
+		super (x,y,xSpeed,ySpeed,right,top);
+	}
+	
+	public static void setSprite(){
+		SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
+		enemy = ss.grabImage(4, 1, 32, 32);
 	}
 
 	public void tick(){
-		X+=VELX;
-		Y+=VELY;
+		setX(getX() + getxSpeed());
+		setY(getY() + getySpeed());
 	}
 	
-	public double getX(){
-		return X;
+	public void render(Graphics g) {
+		g.drawImage(enemy, (int)getX(), (int)getY(), null);
 	}
-	public double getY(){
-		return Y;
+
+	@Override
+	public void animateOneStep() {
 	}
-	public void setX(double X){
-		this.X = X;
-	}
-	public void setY(double Y){
-		this.Y = Y;
-	}
-	
-	public void setVelX(double VELX){
-		this.VELX = VELX;
-	}
-	public void setVelY(double VELY){
-		this.VELY = VELY;
+
+	@Override
+	public void draw(Graphics g) {
 	}
 }

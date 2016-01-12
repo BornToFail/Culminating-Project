@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -48,17 +49,23 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage fennelSplash = null;
 	private BufferedImage pauseOverlay = null;
 	private BufferedImage selectionBG = null;
+	
+	//int enemys=6;
 
 	private BufferedImage hudRight = null;
-	private boolean shooting = false;
+	boolean shooting = false;
 	public static boolean konami = false;
 	int[] sequence = {38, 38, 40, 40, 37, 39, 37, 39, 66, 65};
 	int currentButton = 0;
 	private Player p;
 	private Controller c;
+
+
 	private Controller testC;
 
 
+	static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
+	
 	//initialize
 	public void init(){
 		requestFocus(); //makes it so user doesn't have to press game to begin playing when it launces
@@ -113,6 +120,19 @@ public class Game extends Canvas implements Runnable {
 		}
 		System.exit(1);
 	}
+	
+	
+	public static void EnemyBehaviour(){
+		if(State == STATE.GAME ){
+			for (int i=0;i<25;i++){	
+				spawner.add(new Enemy(200,0,0,0,400,0));
+				spawner.get(i).setxSpeed(2);
+				spawner.get(i).setySpeed(2);
+			}
+			
+
+		}
+	}
 
 
 	//whenever a thread is called, runnable will call run
@@ -156,6 +176,7 @@ public class Game extends Canvas implements Runnable {
 		p.tick();
 		c.tick();
 		hudTimer++;
+		EnemyBehaviour();
 		}else if(State == STATE.PAUSE){
 			//paused
 		}
@@ -174,11 +195,18 @@ public class Game extends Canvas implements Runnable {
 		//////////////////////////////
 		if (State == STATE.GAME){
 
-			g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-			g.drawImage(background, 0, 0, null);
-			g.drawImage(hudRight, 500, 0, null);
-			HUD.render(g);
-
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		g.drawImage(background, 0, 0, null);
+		g.drawImage(hudRight, 500, 0, null);
+		HUD.render(g);
+	
+		p.render(g);
+		c.render(g);
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		g.drawImage(background, 0, 0, null);
+		g.drawImage(hudRight, 500, 0, null);
+		HUD.render(g);
+		spawner.get(0).render(g);
 			p.render(g);
 			c.render(g);
 			testC.render(g);
@@ -192,13 +220,13 @@ public class Game extends Canvas implements Runnable {
 
 			p.render(g);
 			c.render(g);
+
 		}else if (State == STATE.MENU){//If it's the MENU state, it will display the menu
 			g.drawImage(menuBG_1, 0, 0, null);
 			g.drawImage(fennelSplash, 50, 100, null);
 			menu.render(g);
 		}else if (State == STATE.SELECT){//If it's the MENU state, it will display the menu
 			if (konami == true){
-				KonamiMusic.playMusic();
 				Game.State = Game.STATE.GAME;
 			}
 			else{

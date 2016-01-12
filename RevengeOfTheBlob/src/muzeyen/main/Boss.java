@@ -1,5 +1,6 @@
 package muzeyen.main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import java.awt.image.BufferedImage;
@@ -33,7 +34,7 @@ T.scheduleAtFixedRate(new TimerTask() {
 
 //T.cancel();
 
-public class Boss {
+public class Boss implements Runnable {
 	/**
 	 * 
 	 */
@@ -42,6 +43,13 @@ public class Boss {
 	
 	private double XSpeed;
 	private double YSpeed;
+	
+	private int left;
+	private int right;
+	private int top;
+	private int bottom;
+	
+	private boolean move;
 	
 	private BufferedImage boss;
 	
@@ -67,33 +75,218 @@ public class Boss {
 		this.Y = Y;
 	}
 	
-	public void setXSpeed(double XSpeed){
-		this.XSpeed = XSpeed;
+	public void setXSpeed(double XSpeed, double rate){
+		this.XSpeed = XSpeed*rate;
 	}
-	public void setVelY(double YSpeed){
-		this.YSpeed = YSpeed;
+	public void setVelY(double YSpeed, double rate){
+		this.YSpeed = YSpeed*rate;
 	}
 	
-	private void Moves(){
-		//Boss' movement method	
-			//If boss speed is fast
-				//Boss is visible
-		
-			//If boss speed is slow
-				//Boss is only invisible when user shoots
-		
-				
-		
-			
-			
-		}
 	
-	private void Shooting(){
+	private void Shooting(double speed){
 		//If boss shoots, player freezes for 2 seconds
+		/*For shooting
+		 * Loop that detects increasing angles of some
+		 * kind and shoots bullets every x degrees.
+		 * Bullets travel in straight lines.
+		 */
 	}
+	
+	public Boss(double x, double y, int left, int right, int top,
+			int bottom) {
+		this.XSpeed = 0;
+		this.YSpeed = 0;
+		this.X = x;
+		this.Y = y;
+		this.left = left;
+		this.right = right;
+		this.top = top;
+		this.bottom = bottom;
+		startThread();
+	}
+	
+	public void startThread() {
+		move = true;
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
+	public void stopThread() {
+		move = false;
+	}
+	
+	public void run() {
+		while (move) {
+			X += XSpeed;
+			Y += YSpeed;
+			if (X >= right | X <= left){
+				//XSpeed *= -1;
+				X = left;
+			}
+			if (X >= left | X <= right){
+				X = right;
+			}
+			if (Y >= bottom | Y <= top){
+				//YSpeed *= -1;
+				Y = top;
+			}
+			if (Y >= top | Y <= bottom){
+				Y = bottom;
+			}			
+		}
+	}
+	
+	
+
+	
+
 		
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

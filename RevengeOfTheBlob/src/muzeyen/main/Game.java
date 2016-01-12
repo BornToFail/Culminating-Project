@@ -124,8 +124,8 @@ public class Game extends Canvas implements Runnable {
 		if(State == STATE.GAME ){
 			for (int i=0;i<25;i++){	
 				spawner.add(new Enemy(200,0,0,0));
-				spawner.get(i).setxSpeed(4);
-				spawner.get(i).setySpeed(4);
+				spawner.get(i).setxSpeed(1);
+				spawner.get(i).setySpeed(1);
 			}
 			
 

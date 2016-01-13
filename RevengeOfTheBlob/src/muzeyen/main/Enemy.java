@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 public class Enemy extends MovingObject {
 	
-	
 	private static BufferedImage enemy;
-	//static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
 
 	public Enemy (double x, double y, double xSpeed, double ySpeed, int right, int top) {
 		super (x,y,xSpeed,ySpeed,right,top);
@@ -38,8 +36,6 @@ public class Enemy extends MovingObject {
 				Game.spawner.remove(i);
 			}
 		}
-		
-
 	}
 		
 	public void render(Graphics g) {

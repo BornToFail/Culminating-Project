@@ -52,7 +52,7 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage pauseOverlay = null;
 	private BufferedImage selectionBG = null;
 	
-	//int enemys=6;
+	// int enemys=6;
 
 	private BufferedImage hudRight = null;
 	boolean shooting = false;
@@ -62,11 +62,10 @@ public class Game extends Canvas implements Runnable {
 	private Player p;
 	private Controller c;
 
-
 	private Controller testC;
 
-
 	static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
+	
 	
 	//initialize
 	public void init(){
@@ -126,7 +125,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static void EnemyBehaviour(){
 		if(State == STATE.GAME ){
-			for (int i=0;i<5;i++){	
+			for (int i=0;i<8;i++){	
 				spawner.add(new Enemy(randSpawn,0,0,0,400,0));
 				spawner.get(i).setxSpeed(2);
 				spawner.get(i).setySpeed(2);
@@ -160,7 +159,6 @@ public class Game extends Canvas implements Runnable {
 			}
 			render();
 			frames++;
-			EnemyBehaviour();
 			Enemy.testBorders();
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
@@ -179,7 +177,11 @@ public class Game extends Canvas implements Runnable {
 		p.tick();
 		c.tick();
 		hudTimer++;
-		EnemyBehaviour();
+		if ((hudTimer % 200)==0){
+			if (spawner.size() < 10){
+				EnemyBehaviour();
+			}
+		}
 		}else if(State == STATE.PAUSE){
 			//paused
 		}
@@ -209,7 +211,10 @@ public class Game extends Canvas implements Runnable {
 		g.drawImage(background, 0, 0, null);
 		g.drawImage(hudRight, 500, 0, null);
 		HUD.render(g);
-		spawner.get(0).render(g);
+		for (int i = 0; i < spawner.size(); i++){
+			spawner.get(i).render(g);
+		}
+	
 			p.render(g);
 			c.render(g);
 			testC.render(g);

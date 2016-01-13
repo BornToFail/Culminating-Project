@@ -52,7 +52,6 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage pauseOverlay = null;
 	private BufferedImage selectionBG = null;
 	
-	// int enemys=6;
 
 	private BufferedImage hudRight = null;
 	boolean shooting = false;
@@ -130,9 +129,9 @@ public class Game extends Canvas implements Runnable {
 				spawner.get(i).setxSpeed(2);
 				spawner.get(i).setySpeed(2);
 			}
-			
 
 		}
+
 	}
 
 
@@ -166,6 +165,11 @@ public class Game extends Canvas implements Runnable {
 			    FPS = frames;
 				updates = 0;
 				frames = 0;
+			}
+			for (int i=0;i<8;i++){
+				if (spawner.get(i).getX()-5<=p.getX()&&spawner.get(i).getX()+5>=p.getX()&&spawner.get(i).getY()-32<=p.getY()&&spawner.get(i).getY()+32>=p.getY()){
+					Player.lives--;
+				}
 			}
 		}
 		stop();

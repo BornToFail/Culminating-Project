@@ -37,6 +37,10 @@ public class Enemy extends MovingObject {
 			}
 		}
 	}
+	
+	public static void collisionTest(){
+		//Game.spawner.remove(i);
+	}
 		
 	public void render(Graphics g) {
 		g.drawImage(enemy, (int)getX(), (int)getY(), null);

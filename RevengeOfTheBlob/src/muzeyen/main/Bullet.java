@@ -34,5 +34,9 @@ public class Bullet {
 	public double getY(){
 		return y;
 	}
+	
+	public double getX(){
+		return x;
+	}
 
 }

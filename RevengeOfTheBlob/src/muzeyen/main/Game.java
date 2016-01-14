@@ -167,8 +167,9 @@ public class Game extends Canvas implements Runnable {
 				frames = 0;
 			}
 			for (int i=0;i<8;i++){
-				
-				if (spawner.get(i).getX()-5<=p.getX()&&spawner.get(i).getX()+5>=p.getX()&&spawner.get(i).getY()-32<=p.getY()&&spawner.get(i).getY()+32>=p.getY()){
+				double DistanceX = spawner.get(i).getX()-p.getX();
+				double DistanceY = spawner.get(i).getY()-p.getY();
+				if (DistanceX<32&&DistanceY<32){
 					Player.lives--;
 				}
 			}

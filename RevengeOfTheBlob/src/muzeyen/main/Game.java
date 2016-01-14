@@ -62,8 +62,10 @@ public class Game extends Canvas implements Runnable {
 	private Controller c;
 
 	private Controller testC;
+	int randomizer=6;
 
 	static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
+	static ArrayList<Enemy> spawner2 = new ArrayList<Enemy>();
 	
 	
 	//initialize
@@ -124,11 +126,20 @@ public class Game extends Canvas implements Runnable {
 	
 	public static void EnemyBehaviour(){
 		if(State == STATE.GAME ){
-			for (int i=0;i<8;i++){	
-				spawner.add(new Enemy(randSpawn,0,0,0,400,0));
-				spawner.get(i).setxSpeed(2);
-				spawner.get(i).setySpeed(2);
+			if (Math.random()%6==2){
+				for (int i=0;i<3;i++){	
+					spawner2.add(new Enemy(randSpawn,0,0,0,400,0));
+					spawner2.get(i).setxSpeed(2);
+					spawner2.get(i).setySpeed(2);
+				}
 			}
+			else
+				for (int i=0;i<8;i++){	
+					spawner.add(new Enemy(randSpawn,0,0,0,400,0));
+					spawner.get(i).setxSpeed(2);
+					spawner.get(i).setySpeed(2);
+				}
+			
 
 		}
 
@@ -166,13 +177,13 @@ public class Game extends Canvas implements Runnable {
 				updates = 0;
 				frames = 0;
 			}
-			for (int i=0;i<8;i++){
-				double DistanceX = spawner.get(i).getX()-p.getX();
-				double DistanceY = spawner.get(i).getY()-p.getY();
-				if (DistanceX<32&&DistanceY<32){
-					Player.lives--;
-				}
-			}
+			//for (int i=0;i<8;i++){
+				//double DistanceX = spawner.get(i).getX()-p.getX();
+				//double DistanceY = spawner.get(i).getY()-p.getY();
+				//if (DistanceX<32&&DistanceY<32){
+					//Player.lives--;
+				//}
+			//}
 		}
 		stop();
 	}

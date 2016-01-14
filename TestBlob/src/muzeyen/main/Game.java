@@ -50,7 +50,7 @@ public class Game extends Canvas implements Runnable {
 		text = new Texture(this);
 		
 		p = new Player(200,200, text); //initializes player with x-cord and y-cord 200\
-		c = new Controller(this, text);
+		c = new Controller(this,text);
 
 	}
 
@@ -162,7 +162,7 @@ public class Game extends Canvas implements Runnable {
 		}	
 		else if (key == KeyEvent.VK_SPACE && !isShooting){
 			isShooting = true;
-			c.addBullet(new Bullet(p.getX(), p.getY(), text));
+			c.addEntity(new Bullet(p.getX(), p.getY(), text));
 		}	
 	}
 

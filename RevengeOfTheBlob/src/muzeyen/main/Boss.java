@@ -49,6 +49,8 @@ public class Boss implements Runnable {
 	private int top;
 	private int bottom;
 	
+	private boolean bshooting = false;
+	
 	private boolean move;
 	
 	private BufferedImage boss;
@@ -84,6 +86,8 @@ public class Boss implements Runnable {
 	
 	
 	private void Shooting(double speed){
+		bshooting = true;
+		
 		//If boss shoots, player freezes for 2 seconds
 		/*For shooting
 		 * Loop that detects increasing angles of some
@@ -143,155 +147,5 @@ public class Boss implements Runnable {
 		
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

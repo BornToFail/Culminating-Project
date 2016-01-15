@@ -1,59 +1,42 @@
 package muzeyen.main;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.Random;
 
-public class Enemy extends MovingObject {
+//implements Entity
+public class Enemy implements Entity {
+
+	private double x, y;
+	Random r = new Random();
 	
-	private static BufferedImage enemy;
-	private static BufferedImage enemy2;
-
-	public Enemy (double x, double y, double xSpeed, double ySpeed, int right, int top) {
-		super (x,y,xSpeed,ySpeed,right,top);
+	private Texture text;
+	
+	public Enemy(double x, double y, Texture text){
+		this.x = x;
+		this.y = y;
+		this.text = text;
 	}
 	
-	public static void setSprite(){
-		SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
-		enemy = ss.grabImage(4, 1, 32, 32);
-		enemy2= ss.grabImage(4, 2, 32, 32);
-	}
-
 	public void tick(){
-				setX(getX() + getxSpeed());
-				setY(getY() + getySpeed());
-
-		}
+		y+=5;
 		
-	public static void testBorders(){
-		for(int i = 0; i < Game.spawner.size(); i++){
-			if(Game.spawner.get(i).getX() >= 480){
-				Game.spawner.get(i).setxSpeed(-2);
-			}
-			else{
-				Game.spawner.get(i).setxSpeed(2);
-			}
-			
-			if(Game.spawner.get(i).getY() >= 300){
-				Game.spawner.remove(i);
-			}
+		if (y>(Game.HEIGHT*Game.SCALE)){
+			y = 0;
+			x = r.nextInt(((Game.WIDTH*Game.SCALE))-160);
 		}
 	}
 	
-	public static void collisionTest(){
-		//Game.spawner.remove(i);
-	}
-		
-	public void render(Graphics g) {
-		g.drawImage(enemy, (int)getX(), (int)getY(), null);
-		g.drawImage(enemy2, (int)getX(), (int)getY(), null);
+	public void render(Graphics g){
+		g.drawImage(text.enemy, (int)x, (int)y, null);
 	}
 
-	@Override
-	public void animateOneStep() {
+	public double getX() {
+		return x;
 	}
 
-	@Override
-	public void draw(Graphics g) {
+	public double getY() {
+		return y;
 	}
+
+
 }

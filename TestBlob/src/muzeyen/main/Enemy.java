@@ -17,11 +17,11 @@ public class Enemy implements Entity {
 	}
 	
 	public void tick(){
-		y+=5;
+		y+=3;
 		
 		if (y>(Game.HEIGHT*Game.SCALE)){
 			y = 0;
-			x = r.nextInt((Game.WIDTH*Game.SCALE));
+			x = r.nextInt(((Game.WIDTH*Game.SCALE))- 400);
 		}
 	}
 	

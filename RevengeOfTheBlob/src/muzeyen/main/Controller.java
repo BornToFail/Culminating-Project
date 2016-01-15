@@ -1,50 +1,46 @@
 package muzeyen.main;
 
 import java.awt.Graphics;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Controller {
+
+	ArrayList<Entity> e = new ArrayList<Entity>();
+
+	Entity ent;
+	private Texture text;
 	
-	private LinkedList<Bullet> b = new LinkedList<Bullet>();
-	
-	Bullet TempBullet;
-	
-	Game game;
-	
-	public Controller(Game game){
-		this.game = game;
-		
-		
+
+	public Controller(Game game, Texture text) {
+		this.text = text;
+		addEntity(new Enemy(100, 100, text));
 	}
-	
+
 	public void tick(){
-		for (int i = 0; i<b.size(); i++){
-			TempBullet = b.get(i);
+		for(int i = 0; i < e.size(); i++){
+			ent = e.get(i);
 
-			//destroys bullet once its off the screen
-			if(TempBullet.getY() <0){
-				removeBullet(TempBullet);
-			}
-
-			TempBullet.tick();
+			ent.tick();
 		}
 	}
 
 	public void render (Graphics g){
-		for (int i = 0; i<b.size(); i++){
-			TempBullet = b.get(i);
-			
-			TempBullet.render(g);
+
+		for(int i = 0; i < e.size(); i++){
+			ent = e.get(i);
+
+			ent.render(g);
 		}
 	}
-	
-	public void addBullet (Bullet block){
-		b.add(block);
+
+	public void addEntity(Entity param){
+		e.add(param);
 	}
-	public void removeBullet(Bullet block){
-		b.remove(block);
+	public void removeEntity(Entity param){
+		e.remove(param);
 	}
-	
-	
-	
+
+
+
 }

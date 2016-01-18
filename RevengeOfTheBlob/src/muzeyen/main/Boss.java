@@ -38,8 +38,8 @@ public class Boss implements Runnable {
 	/**
 	 * 
 	 */
-	private double X;
-	private double Y;
+	private double x;
+	private double y;
 	
 	private double XSpeed;
 	private double YSpeed;
@@ -57,24 +57,24 @@ public class Boss implements Runnable {
 	
 	
 	public Boss(double X, double Y, Game game) {
-		this.X=X;
-		this.Y=Y;
+		this.x=x;
+		this.y=y;
 		
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		boss=ss.grabImage(5, 1, 32, 32);
 	}
 	
 	public double getX(){
-		return X;
+		return x;
 	}
 	public double getY(){
-		return Y;
+		return y;
 	}
 	public void setX(double X){
-		this.X = X;
+		this.x = x;
 	}
 	public void setY(double Y){
-		this.Y = Y;
+		this.y = y;
 	}
 	
 	public void setXSpeed(double XSpeed, double rate){
@@ -100,8 +100,8 @@ public class Boss implements Runnable {
 			int bottom) {
 		this.XSpeed = 0;
 		this.YSpeed = 0;
-		this.X = x;
-		this.Y = y;
+		this.x = x;
+		this.y = y;
 		this.left = left;
 		this.right = right;
 		this.top = top;
@@ -121,24 +121,44 @@ public class Boss implements Runnable {
 	
 	public void run() {
 		while (move) {
-			X += XSpeed;
-			Y += YSpeed;
-			if (X >= right | X <= left){
+			x += XSpeed;
+			y += YSpeed;
+			if (x >= right | x <= left){
 				//XSpeed *= -1;
-				X = left;
+				x = left;
 			}
-			if (X >= left | X <= right){
-				X = right;
+			if (x >= left | x <= right){
+				x = right;
 			}
-			if (Y >= bottom | Y <= top){
+			if (y >= bottom | y <= top){
 				//YSpeed *= -1;
-				Y = top;
+				y = top;
 			}
-			if (Y >= top | Y <= bottom){
-				Y = bottom;
+			if (y >= top | y <= bottom){
+				y = bottom;
 			}			
 		}
 	}
+	
+	//update method
+		public void tick(){
+			x+=XSpeed;
+			y+=YSpeed;
+			
+			//prevents player from leaving the screen
+			if(x <= 0){
+				x=0;
+			}
+			if(x>=640-172){ //-20 was a result of trial and error
+				x=640-172;
+			}
+			if(y <= 0){
+				y=0;
+			}
+			if(y>=480-32){ //-32 was a result of trial and error
+				y=480-32;
+			}
+		}
 	
 	
 

@@ -61,6 +61,9 @@ public class Game extends Canvas implements Runnable {
 	private Player p;
 	private Controller c;
 	private Texture text;
+	
+	public ArrayList<EntityA> eA;
+	public ArrayList<EntityB> eB;
 
 	//private Controller testC;
 	int randomizer=6;
@@ -92,9 +95,12 @@ public class Game extends Canvas implements Runnable {
 		
 		text = new Texture (this);
 		
-		p = new Player(200,200, 1 ,this); //initializes player with x-cord and y-cord 200 and the state of the player sprite\
+		p = new Player(200,200, text); //initializes player with x-cord and y-cord 200 and the state of the player sprite\
 		c = new Controller(this,text);
-		//testC = new Controller(this);
+		
+		eA = c.getEntityA();
+		eB = c.getEntityB();
+		
 		menu = new Menu();
 		
 		fennelSplash.getScaledInstance(fennelSplash.getWidth()/3, fennelSplash.getHeight()/3, Image.SCALE_DEFAULT);
@@ -153,7 +159,7 @@ public class Game extends Canvas implements Runnable {
 			frames++;
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
-				System.out.println(updates + " Ticks, FPS " + frames);
+				//System.out.println(updates + " Ticks, FPS " + frames);
 			    FPS = frames;
 				updates = 0;
 				frames = 0;
@@ -294,15 +300,15 @@ public class Game extends Canvas implements Runnable {
 			else if (key == KeyEvent.VK_SPACE && !shooting){
 				shooting = true;
 				if (Player.selectedCharacter == 1){
-					c.addEntity(new Bullet(p.getX(), p.getY(), text));
+					c.addEntity(new Bullet(p.getX(), p.getY(), text, this));
 				}
 			
 			else if (Player.selectedCharacter == 2){
-					c.addEntity(new Bullet(p.getX(), p.getY(), text));
+					c.addEntity(new Bullet(p.getX(), p.getY(), text, this));
 
 				}
 				else{if (Player.selectedCharacter == 3)
-					c.addEntity(new Bullet(p.getX(), p.getY(), text));
+					c.addEntity(new Bullet(p.getX(), p.getY(), text, this));
 
 				}
 			}

@@ -1,12 +1,12 @@
 package muzeyen.main;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Player {
+public class Player extends GameObject  implements EntityA {
 	
-	private double x; //x-cord of player
-	private double y; //y-cord of player
+
 	private int s; //Sprite position of player
 	
 	//used to make movement smother 
@@ -18,13 +18,12 @@ public class Player {
 	private static BufferedImage player;
 	static SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
 	static SpriteSheet ssk = new SpriteSheet(Game.getSpriteSheetK());
+	private Texture text;
 	
-	public Player(double x, double y, int s, Game game){
-		
+	public Player(double x, double y, Texture text){
 		//initialize player and sets x and y c-cord
-		this.x = x;
-		this.y = y;
-		this.s = s;
+		super(x,y);
+		this.text = text;
 
 		//received from getter method in Game class
 		
@@ -67,6 +66,11 @@ public class Player {
 			y=480-32;
 		}
 	}
+	
+	public Rectangle getBounds(){
+		return new Rectangle ((int)x, (int)y, 32, 32);
+	}
+
 	
 	//draw image method
 	public void render(Graphics g){

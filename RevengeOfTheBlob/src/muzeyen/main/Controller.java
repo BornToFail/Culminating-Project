@@ -6,9 +6,11 @@ import java.util.Random;
 
 public class Controller {
 
-	ArrayList<Entity> e = new ArrayList<Entity>();
+	ArrayList<EntityA> eA = new ArrayList<EntityA>();
+	ArrayList<EntityB> eB = new ArrayList<EntityB>();
 
-	Entity ent;
+	EntityA entA;
+	EntityB entB;
 	private Texture text;
 	
 
@@ -18,29 +20,60 @@ public class Controller {
 	}
 
 	public void tick(){
-		for(int i = 0; i < e.size(); i++){
-			ent = e.get(i);
+		//A class
+		for(int i = 0; i < eA.size(); i++){
+			entA = eA.get(i);
 
-			ent.tick();
+			entA.tick();
+		}
+		
+		//B class
+		for(int i = 0; i < eB.size(); i++){
+			entB = eB.get(i);
+
+			entB.tick();
 		}
 	}
 
 	public void render (Graphics g){
 
-		for(int i = 0; i < e.size(); i++){
-			ent = e.get(i);
+		//A class
+		for(int i = 0; i < eA.size(); i++){
+			entA = eA.get(i);
 
-			ent.render(g);
+			entA.render(g);
 		}
+		
+		//B class
+				for(int i = 0; i < eB.size(); i++){
+					entB = eB.get(i);
+
+					entB.render(g);
+				}
 	}
 
-	public void addEntity(Entity param){
-		e.add(param);
+	public void addEntity(EntityA param){
+		eA.add(param);
 	}
-	public void removeEntity(Entity param){
-		e.remove(param);
+	public void removeEntity(EntityA param){
+		eA.remove(param);
+	}
+	
+	public void addEntity(EntityB param){
+		eB.add(param);
+	}
+	public void removeEntity(EntityB param){
+		eB.remove(param);
 	}
 
+
+	public ArrayList<EntityA> getEntityA(){
+		return eA;
+	}
+	
+	public ArrayList<EntityB> getEntityB(){
+		return eB;
+	}
 
 
 }

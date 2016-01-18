@@ -16,7 +16,7 @@ public class Texture {
 	private void getTexture(){
 		//**col, row, width, height
 		player = ss.grabImage(1, 1, 32, 32); //grabs player sprite
-		missile = ss.grabImage(2, 1, 32, 32); //grabs bullet sprite
-		enemy = ss.grabImage(3, 1, 32, 32); //grabs enemy sprite
+		missile = ss.grabImage(5, 1, 32, 32); //grabs bullet sprite
+		enemy = ss.grabImage(4, 1, 32, 32); //grabs enemy sprite
 	}
 }

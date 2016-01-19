@@ -31,6 +31,8 @@ public class HUD {
 
 		}catch(IOException e){
 			e.printStackTrace();	
+			Game.State = Game.STATE.G_ERROR;
+
 		}
 	}
 
@@ -91,6 +93,7 @@ public class HUD {
 			//check if it's in highscores
 			//if it is, prompt them to add their name to save score
 			//if not gameover screen
+			Game.State = Game.STATE.GAMEOVER;
 
 		}
     	g.setFont(fntL);

@@ -38,8 +38,8 @@ public class Boss implements Runnable {
 	/**
 	 * 
 	 */
-	private double x;
-	private double y;
+	private double X;
+	private double Y;
 	
 	private double XSpeed;
 	private double YSpeed;
@@ -49,32 +49,30 @@ public class Boss implements Runnable {
 	private int top;
 	private int bottom;
 	
-	private boolean bshooting = false;
-	
 	private boolean move;
 	
 	private BufferedImage boss;
 	
 	
 	public Boss(double X, double Y, Game game) {
-		this.x=x;
-		this.y=y;
+		this.X=X;
+		this.Y=Y;
 		
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		boss=ss.grabImage(5, 1, 32, 32);
 	}
 	
 	public double getX(){
-		return x;
+		return X;
 	}
 	public double getY(){
-		return y;
+		return Y;
 	}
 	public void setX(double X){
-		this.x = x;
+		this.X = X;
 	}
 	public void setY(double Y){
-		this.y = y;
+		this.Y = Y;
 	}
 	
 	public void setXSpeed(double XSpeed, double rate){
@@ -86,8 +84,6 @@ public class Boss implements Runnable {
 	
 	
 	private void Shooting(double speed){
-		bshooting = true;
-		
 		//If boss shoots, player freezes for 2 seconds
 		/*For shooting
 		 * Loop that detects increasing angles of some
@@ -100,8 +96,8 @@ public class Boss implements Runnable {
 			int bottom) {
 		this.XSpeed = 0;
 		this.YSpeed = 0;
-		this.x = x;
-		this.y = y;
+		this.X = x;
+		this.Y = y;
 		this.left = left;
 		this.right = right;
 		this.top = top;
@@ -121,44 +117,24 @@ public class Boss implements Runnable {
 	
 	public void run() {
 		while (move) {
-			x += XSpeed;
-			y += YSpeed;
-			if (x >= right | x <= left){
+			X += XSpeed;
+			Y += YSpeed;
+			if (X >= right | X <= left){
 				//XSpeed *= -1;
-				x = left;
+				X = left;
 			}
-			if (x >= left | x <= right){
-				x = right;
+			if (X >= left | X <= right){
+				X = right;
 			}
-			if (y >= bottom | y <= top){
+			if (Y >= bottom | Y <= top){
 				//YSpeed *= -1;
-				y = top;
+				Y = top;
 			}
-			if (y >= top | y <= bottom){
-				y = bottom;
+			if (Y >= top | Y <= bottom){
+				Y = bottom;
 			}			
 		}
 	}
-	
-	//update method
-		public void tick(){
-			x+=XSpeed;
-			y+=YSpeed;
-			
-			//prevents player from leaving the screen
-			if(x <= 0){
-				x=0;
-			}
-			if(x>=640-172){ //-20 was a result of trial and error
-				x=640-172;
-			}
-			if(y <= 0){
-				y=0;
-			}
-			if(y>=480-32){ //-32 was a result of trial and error
-				y=480-32;
-			}
-		}
 	
 	
 
@@ -167,5 +143,155 @@ public class Boss implements Runnable {
 		
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

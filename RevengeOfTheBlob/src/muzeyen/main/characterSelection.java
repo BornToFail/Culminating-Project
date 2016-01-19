@@ -27,6 +27,7 @@ public static void preLoad(){
 		backButton = loader.loadImage("/backButton.png");
 
 	}catch(IOException e){
+		Game.State = Game.STATE.G_ERROR;
 		e.printStackTrace();	
 	}
 }

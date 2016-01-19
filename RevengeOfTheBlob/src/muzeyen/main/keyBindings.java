@@ -1,5 +1,5 @@
 package muzeyen.main;
 
-public class music {
+public class keyBindings {
 
 }

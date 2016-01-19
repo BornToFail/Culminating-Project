@@ -45,6 +45,7 @@ public class gamemodeSelection {
 			backButton = loader.loadImage("/backButton.png");
 
 		}catch(IOException e){
+			Game.State = Game.STATE.G_ERROR;
 			e.printStackTrace();	
 		}
 

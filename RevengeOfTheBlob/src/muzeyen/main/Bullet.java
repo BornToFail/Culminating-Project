@@ -1,48 +1,42 @@
 package muzeyen.main;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Bullet extends GameObject implements EntityA {
+public class Bullet {
 	
-
-	private Texture text;
-	private Game game;
+	private double x;
+	private double y;
 	
-	public Bullet(double x, double y, Texture text, Game game){
-		super(x,y);
-		this.text = text;
-		this.game = game;
-
+	BufferedImage image;
+	
+	public Bullet(double x, double y, Game game){
+		this.x = x;
+		this.y = y;	
+		
+		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
+		SpriteSheet ssk = new SpriteSheet(game.getSpriteSheetK());
+		if (Game.konami == false){
+		image = ss.grabImage(5, Player.selectedCharacter, 32, 32);
+		}
+		else if (Game.konami == true){
+			image = ssk.grabImage(2, 1, 32, 32);
+		}
 	}
 	
 	public void tick(){
 		y-=10;
-		
-		if(Physics.Collision(this, game.eB)){
-			System.out.println("COLLISION");
-		}
 	}
-	
-	
-	public Rectangle getBounds(){
-		return new Rectangle ((int)x, (int)y, 32, 32);
-	}
-
-	
 	public void render(Graphics g){
-		g.drawImage(text.missile, (int)x, (int)y, null);
+		g.drawImage(image, (int)x, (int)y, null);
 	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
+	
+	public double getY(){
 		return y;
 	}
 	
-	
+	public double getX(){
+		return x;
+	}
 
 }

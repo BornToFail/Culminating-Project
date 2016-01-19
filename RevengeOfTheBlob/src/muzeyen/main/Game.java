@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -39,18 +41,21 @@ public class Game extends Canvas implements Runnable {
 		SETTINGS,
 		GAME,
 		PAUSE, 
+		HIGHSCORE,
+		GAMEOVER,
+		G_ERROR
 	}
 	
 	public static STATE State = STATE.MENU;
 
-	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB); //buffers window
+	private static BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB); //buffers window
 	private static BufferedImage spriteSheet = null;
 	private static BufferedImage spriteSheetK = null;
-	private BufferedImage background = null;
-	private BufferedImage menuBG_1 = null;
-	private BufferedImage fennelSplash = null;
-	private BufferedImage pauseOverlay = null;
-	private BufferedImage selectionBG = null;
+	private static BufferedImage background = null;
+	private static BufferedImage menuBG_1 = null;
+	private static BufferedImage fennelSplash = null;
+	private static BufferedImage pauseOverlay = null;
+	private static BufferedImage selectionBG = null;
 	
 
 	private BufferedImage hudRight = null;
@@ -58,18 +63,12 @@ public class Game extends Canvas implements Runnable {
 	public static boolean konami = false;
 	int[] sequence = {38, 38, 40, 40, 37, 39, 37, 39, 66, 65};
 	int currentButton = 0;
-	private Player p;
-	private Controller c;
-	private Texture text;
-	
-	public ArrayList<EntityA> eA;
-	public ArrayList<EntityB> eB;
+	public static Player p;
+	static Controller c;
 
-	//private Controller testC;
-	int randomizer=6;
+	private Controller testC;
 
 	static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
-	static ArrayList<Enemy> spawner2 = new ArrayList<Enemy>();
 	
 	
 	//initialize
@@ -88,19 +87,15 @@ public class Game extends Canvas implements Runnable {
 			hudRight = loader.loadImage("/HUD_Side_Display.png");
 
 		}catch(IOException e){
+			Game.State = Game.STATE.G_ERROR;
 			e.printStackTrace();	
 		}
 
 		addKeyListener(new KeyInput(this));
 		
-		text = new Texture (this);
-		
-		p = new Player(200,200, text); //initializes player with x-cord and y-cord 200 and the state of the player sprite\
-		c = new Controller(this,text);
-		
-		eA = c.getEntityA();
-		eB = c.getEntityB();
-		
+		p = new Player(300,400, 1 ,this); //initializes player with x-cord and y-cord 200 and the state of the player sprite\
+		c = new Controller(this);
+		testC = new Controller(this);
 		menu = new Menu();
 		
 		fennelSplash.getScaledInstance(fennelSplash.getWidth()/3, fennelSplash.getHeight()/3, Image.SCALE_DEFAULT);
@@ -132,6 +127,18 @@ public class Game extends Canvas implements Runnable {
 		System.exit(1);
 	}
 	
+	
+	public static void EnemyBehaviour(){
+		if(State == STATE.GAME ){
+			for (int i=0;i<8;i++){	
+				spawner.add(new Enemy(randSpawn,0,0,0,400,0));
+				spawner.get(i).setxSpeed(2);
+				spawner.get(i).setySpeed(2);
+			}
+
+		}
+
+	}
 
 
 	//whenever a thread is called, runnable will call run
@@ -157,20 +164,22 @@ public class Game extends Canvas implements Runnable {
 			}
 			render();
 			frames++;
+			if (State == STATE.GAME){
+				//Enemy.testBorders();
+				//Enemy.playercollisionTest();
+			}
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
-				//System.out.println(updates + " Ticks, FPS " + frames);
+				System.out.println(updates + " Ticks, FPS " + frames);
 			    FPS = frames;
 				updates = 0;
 				frames = 0;
 			}
-			//for (int i=0;i<8;i++){
-				//double DistanceX = spawner.get(i).getX()-p.getX();
-				//double DistanceY = spawner.get(i).getY()-p.getY();
-				//if (DistanceX<32&&DistanceY<32){
-					//Player.lives--;
-				//}
-			//}
+//			for (int i=0;i<8;i++){
+//				if (spawner.get(i).getX()-5<=p.getX()&&spawner.get(i).getX()+5>=p.getX()&&spawner.get(i).getY()-32<=p.getY()&&spawner.get(i).getY()+32>=p.getY()){
+//					Player.lives--;
+//				}
+//			}
 		}
 		stop();
 	}
@@ -181,6 +190,13 @@ public class Game extends Canvas implements Runnable {
 		p.tick();
 		c.tick();
 		hudTimer++;
+	
+		if ((hudTimer % 200)==0){
+			if (spawner.size() < 10){
+				EnemyBehaviour();
+			}
+		}
+		
 		}else if(State == STATE.PAUSE){
 			//paused
 		}
@@ -216,7 +232,7 @@ public class Game extends Canvas implements Runnable {
 	
 			p.render(g);
 			c.render(g);
-			//testC.render(g);
+			testC.render(g);
 
 		}else if (State == STATE.CUTSCENE_1){
 			g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -270,6 +286,10 @@ public class Game extends Canvas implements Runnable {
 			g.drawImage(background, 0, 0, null);
 			g.drawImage(pauseOverlay, 0, 0, null);
 			pause.render(g);
+		}else if (State == STATE.GAMEOVER){
+			GameOver.render(g);
+		}else if (State == STATE.G_ERROR){
+			ErrorScreen.render(g);
 		}
 
 		/////////////////////////////
@@ -300,45 +320,43 @@ public class Game extends Canvas implements Runnable {
 			else if (key == KeyEvent.VK_SPACE && !shooting){
 				shooting = true;
 				if (Player.selectedCharacter == 1){
-					c.addEntity(new Bullet(p.getX(), p.getY(), text, this));
+					c.addBullet(new Bullet(p.getX()+3, p.getY(), this));
+					c.addBullet(new Bullet(p.getX()-3, p.getY(), this));
 				}
-			
-			else if (Player.selectedCharacter == 2){
-					c.addEntity(new Bullet(p.getX(), p.getY(), text, this));
+				else if (Player.selectedCharacter == 2){
+					c.addBullet(new Bullet(p.getX(), p.getY(), this));
+					c.addBullet(new Bullet(p.getX(), p.getY(), this));
 
 				}
-				else{if (Player.selectedCharacter == 3)
-					c.addEntity(new Bullet(p.getX(), p.getY(), text, this));
+				else{ //if (Player.selectedCharacter == 3)
+					c.addBullet(new Bullet(p.getX(), p.getY(), this));
+					c.addBullet(new Bullet(p.getX(), p.getY(), this));
 
 				}
-			}
-//
-//
-//			}	
-//			
-//			else if (key == KeyEvent.VK_Z && !shooting){
-//				shooting = true;
-//				if (Player.selectedCharacter == 1){
-//					testC.addBullet(new Bullet(p.getX()+3, p.getY(), this));
-//				}
-//				else if (Player.selectedCharacter == 2){
-//					testC.addBullet(new Bullet(p.getX(), p.getY(), this));
-//
-//				}
-//				else{ //if (Player.selectedCharacter == 3)
-//					testC.addBullet(new Bullet(p.getX(), p.getY(), this));
-//				}
-//
-//
-//			}	
+
+
+			}	
+			else if (key == KeyEvent.VK_Z && !shooting){
+				shooting = true;
+				if (Player.selectedCharacter == 1){
+					testC.addBullet(new Bullet(p.getX()+3, p.getY(), this));
+				}
+				else if (Player.selectedCharacter == 2){
+					testC.addBullet(new Bullet(p.getX(), p.getY(), this));
+
+				}
+				else{ //if (Player.selectedCharacter == 3)
+					testC.addBullet(new Bullet(p.getX(), p.getY(), this));
+				}
+
+
+			}	
 			else if (key == KeyEvent.VK_BACK_SPACE&&paused == false){
 				Game.State = Game.STATE.PAUSE;
 				paused = true;
 			}
 		}	
-		
-			
-			if (State == STATE.MENU){
+		if (State == STATE.MENU){
 			System.out.println(key);
 
 			if (key == sequence[currentButton]){
@@ -356,9 +374,8 @@ public class Game extends Canvas implements Runnable {
 			}
 			
 		}
-		}
 
-	
+	}
 	
 	
 

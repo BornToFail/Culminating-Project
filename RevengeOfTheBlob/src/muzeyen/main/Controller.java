@@ -1,79 +1,50 @@
 package muzeyen.main;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.LinkedList;
 
 public class Controller {
-
-	ArrayList<EntityA> eA = new ArrayList<EntityA>();
-	ArrayList<EntityB> eB = new ArrayList<EntityB>();
-
-	EntityA entA;
-	EntityB entB;
-	private Texture text;
 	
-
-	public Controller(Game game, Texture text) {
-		this.text = text;
-		addEntity(new Enemy(100, 100, text));
-	}
-
-	public void tick(){
-		//A class
-		for(int i = 0; i < eA.size(); i++){
-			entA = eA.get(i);
-
-			entA.tick();
-		}
+	private LinkedList<Bullet> b = new LinkedList<Bullet>();
+	
+	Bullet TempBullet;
+	
+	Game game;
+	
+	public Controller(Game game){
+		this.game = game;
 		
-		//B class
-		for(int i = 0; i < eB.size(); i++){
-			entB = eB.get(i);
+		
+	}
+	
+	public void tick(){
+		for (int i = 0; i<b.size(); i++){
+			TempBullet = b.get(i);
 
-			entB.tick();
+			//destroys bullet once its off the screen
+			if(TempBullet.getY() <0){
+				removeBullet(TempBullet);
+			}
+
+			TempBullet.tick();
 		}
 	}
 
 	public void render (Graphics g){
-
-		//A class
-		for(int i = 0; i < eA.size(); i++){
-			entA = eA.get(i);
-
-			entA.render(g);
+		for (int i = 0; i<b.size(); i++){
+			TempBullet = b.get(i);
+			
+			TempBullet.render(g);
 		}
-		
-		//B class
-				for(int i = 0; i < eB.size(); i++){
-					entB = eB.get(i);
-
-					entB.render(g);
-				}
-	}
-
-	public void addEntity(EntityA param){
-		eA.add(param);
-	}
-	public void removeEntity(EntityA param){
-		eA.remove(param);
 	}
 	
-	public void addEntity(EntityB param){
-		eB.add(param);
+	public void addBullet (Bullet block){
+		b.add(block);
 	}
-	public void removeEntity(EntityB param){
-		eB.remove(param);
-	}
-
-
-	public ArrayList<EntityA> getEntityA(){
-		return eA;
+	public void removeBullet(Bullet block){
+		b.remove(block);
 	}
 	
-	public ArrayList<EntityB> getEntityB(){
-		return eB;
-	}
-
-
+	
+	
 }

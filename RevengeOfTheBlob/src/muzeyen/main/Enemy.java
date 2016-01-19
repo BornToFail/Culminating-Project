@@ -1,45 +1,74 @@
 package muzeyen.main;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-//implements Entity
-public class Enemy extends GameObject implements EntityB {
+public class Enemy extends MovingObject {
+	
+	
+	private static BufferedImage enemy;
+	//static ArrayList<Enemy> spawner = new ArrayList<Enemy>();
 
-	Random r = new Random();
-	
-	private Texture text;
-	
-	public Enemy(double x, double y, Texture text){
-		super(x,y);
-		this.text = text;
+	public Enemy (double x, double y, double xSpeed, double ySpeed, int right, int top) {
+		super (x,y,xSpeed,ySpeed,right,top);
 	}
 	
+	public static void setSprite(){
+		SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
+		enemy = ss.grabImage(4, 1, 32, 32);
+	}
+
 	public void tick(){
-		y+=5;
-		
-		if (y>(Game.HEIGHT*Game.SCALE)){
-			y = 0;
-			x = r.nextInt(((Game.WIDTH*Game.SCALE))-192);
-		}
+		setX(getX() + getxSpeed());
+		setY(getY() + getySpeed());
 	}
 	
-	public void render(Graphics g){
-		g.drawImage(text.enemy, (int)x, (int)y, null);
-	}
-	
-	public Rectangle getBounds(){
-		return new Rectangle ((int)x, (int)y, 32, 32);
+	public void render(Graphics g) {
+		g.drawImage(enemy, (int)getX(), (int)getY(), null);
 	}
 
-	public double getX() {
-		return x;
+	//	public static void testBorders(){
+//		for(int i = 0; i < Game.spawner.size(); i++){
+//			if(Game.spawner.get(i).getX() >= 480){
+//				Game.spawner.get(i).setxSpeed(-2);
+//			}
+//			else{
+//				Game.spawner.get(i).setxSpeed(2);
+//			}
+//
+//			if(Game.spawner.get(i).getY() >= 300){
+//				Game.spawner.remove(i);
+//			}
+//		}
+//	}
+
+//	public static void playercollisionTest(){
+//
+//		if (cooldown == false){
+//			System.out.print("cooldown not in effect");
+//			for (int i = 0; i<Game.spawner.size() && cooldown == false; i++){
+//				double distance = Math.sqrt((Game.p.getX()-Game.spawner.get(i).getX())*(Game.p.getX()-Game.spawner.get(i).getX())-((Game.p.getY()-Game.spawner.get(i).getY()*(Game.p.getY()-Game.spawner.get(i).getY()))));
+//				if (distance < 32){
+//					Player.lives --;
+//					Game.spawner.remove(i);
+//					System.out.println("Collided");
+//					cooldown = true;
+//				}
+//			}
+//
+//		}
+//		else{
+//			if(System.currentTimeMillis() - timer > 10000){
+//				System.out.println("cooldown in effect");
+//				cooldown = false;
+//			}
+//		}
+//	}
+	public void animateOneStep() {
 	}
 
-	public double getY() {
-		return y;
+	@Override
+	public void draw(Graphics g) {
 	}
-
-
 }

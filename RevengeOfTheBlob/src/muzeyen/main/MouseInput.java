@@ -28,6 +28,7 @@ public class MouseInput implements MouseListener {
 				if(my >= 50 && my <= 350){
 					Player.selectedCharacter = 1;
 					Player.setSprite();
+					Enemy.setSprite();
 					Game.State = Game.STATE.GMSELECT;
 				}
 			}
@@ -35,6 +36,7 @@ public class MouseInput implements MouseListener {
 				if(my >= 50 && my <= 350){
 					Player.selectedCharacter = 2;
 					Player.setSprite();
+					Enemy.setSprite();
 					Game.State = Game.STATE.GMSELECT;
 				}
 			}
@@ -42,6 +44,7 @@ public class MouseInput implements MouseListener {
 				if(my >= 50 && my <= 350){
 					Player.selectedCharacter = 3;
 					Player.setSprite();
+					Enemy.setSprite();
 					Game.State = Game.STATE.GMSELECT;
 				}
 			}
@@ -59,6 +62,7 @@ public class MouseInput implements MouseListener {
 					System.out.println("Iwork");
 					Game.State = Game.STATE.GAME;
 					HUD.preload();
+					Game.EnemyBehaviour();
 
 				}
 			}

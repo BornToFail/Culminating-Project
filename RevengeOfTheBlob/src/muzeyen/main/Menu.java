@@ -22,6 +22,7 @@ public void render(Graphics g){
 		settingsButton = loader.loadImage("/settingsButton.png");
 		quitButton = loader.loadImage("/quitButton.png");
 	}catch(IOException e){
+		Game.State = Game.STATE.G_ERROR;
 		e.printStackTrace();	
 	}
 	

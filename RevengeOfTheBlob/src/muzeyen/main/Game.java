@@ -96,6 +96,7 @@ public class Game extends Canvas implements Runnable {
 		
 		p = new Player(300,400, 1 ,this); //initializes player with x-cord and y-cord 200 and the state of the player sprite\
 		c = new Controller(this);
+		//b = new Boss();
 		testC = new Controller(this);
 		menu = new Menu();
 		
@@ -114,7 +115,7 @@ public class Game extends Canvas implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 	}
-
+                
 	private synchronized void stop(){  //sync deals with threads
 		if(!running)
 			return;
@@ -139,6 +140,12 @@ public class Game extends Canvas implements Runnable {
 
 		}
 
+	}
+	
+	public static void BossBehaviour(){
+		if(State == STATE.GAME){
+			//spawner.add(new Boss()); 
+		}
 	}
 
 

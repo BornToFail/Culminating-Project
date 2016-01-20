@@ -20,11 +20,11 @@ public class Boss implements Runnable {
 	/**
 	 * 
 	 */
-	private double X;
-	private double Y;
+	private double x;
+	private double y;
 	
-	private double XSpeed;
-	private double YSpeed;
+	private double xSpeed;
+	private double ySpeed;
 	
 	private int left;
 	private int right;
@@ -33,35 +33,36 @@ public class Boss implements Runnable {
 	
 	private boolean move;
 	
-	private BufferedImage boss;
+	private static BufferedImage boss;
 	
 	
-	public Boss(double X, double Y, Game game) {
-		this.X=X;
-		this.Y=Y;
+	public Boss (double x, double y, double xSpeed, double ySpeed, int right, int top) {
 		
-		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
-		boss=ss.grabImage(5, 1, 32, 32);
+	}
+	
+	public static void setSprite(){
+		SpriteSheet ss = new SpriteSheet(Game.getSpriteSheet());
+		boss = ss.grabImage(4, 1, 32, 32);
 	}
 	
 	public double getX(){
-		return X;
+		return x;
 	}
 	public double getY(){
-		return Y;
+		return y;
 	}
-	public void setX(double X){
-		this.X = X;
+	public void setX(double x){
+		this.x = x;
 	}
-	public void setY(double Y){
-		this.Y = Y;
+	public void setY(double y){
+		this.y = y;
 	}
 	
-	public void setXSpeed(double XSpeed, double rate){
-		this.XSpeed = XSpeed*rate;
+	public void setXSpeed(double xSpeed, double rate){
+		this.xSpeed = xSpeed*rate;
 	}
-	public void setVelY(double YSpeed, double rate){
-		this.YSpeed = YSpeed*rate;
+	public void setVelY(double ySpeed, double rate){
+		this.ySpeed = ySpeed*rate;
 	}
 	
 	
@@ -74,46 +75,23 @@ public class Boss implements Runnable {
 		 */
 	}
 	
-	public Boss(double x, double y, int left, int right, int top,
-			int bottom) {
-		this.XSpeed = 0;
-		this.YSpeed = 0;
-		this.X = x;
-		this.Y = y;
-		this.left = left;
-		this.right = right;
-		this.top = top;
-		this.bottom = bottom;
-		startThread();
-	}
-	
-	public void startThread() {
-		move = true;
-		Thread t = new Thread(this);
-		t.start();
-	}
-	
-	public void stopThread() {
-		move = false;
-	}
-	
 	public void run() {
 		while (move) {
-			X += XSpeed;
-			Y += YSpeed;
-			if (X >= right | X <= left){
+			x += xSpeed;
+			y += ySpeed;
+			if (x >= right | x <= left){
 				//XSpeed *= -1;
-				X = left;
+				x = left;
 			}
-			if (X >= left | X <= right){
-				X = right;
+			if (x >= left | x <= right){
+				x = right;
 			}
-			if (Y >= bottom | Y <= top){
+			if (y >= bottom | y <= top){
 				//YSpeed *= -1;
-				Y = top;
+				y = top;
 			}
-			if (Y >= top | Y <= bottom){
-				Y = bottom;
+			if (y >= top | y <= bottom){
+				y = bottom;
 			}			
 		}
 	}

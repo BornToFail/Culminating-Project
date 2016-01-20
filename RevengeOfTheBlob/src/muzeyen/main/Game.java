@@ -64,6 +64,7 @@ public class Game extends Canvas implements Runnable {
 	int[] sequence = {38, 38, 40, 40, 37, 39, 37, 39, 66, 65};
 	int currentButton = 0;
 	public static Player p;
+	public static Boss b;
 	static Controller c;
 
 	private Controller testC;
@@ -167,6 +168,7 @@ public class Game extends Canvas implements Runnable {
 			if (State == STATE.GAME){
 				//Enemy.testBorders();
 				//Enemy.playercollisionTest();
+				EnemyBehaviour();
 			}
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;

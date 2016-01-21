@@ -22,6 +22,7 @@ public class Boss implements Runnable {
 	 */
 	private double x;
 	private double y;
+	private double r;
 	
 	private double xSpeed;
 	private double ySpeed;
@@ -36,8 +37,18 @@ public class Boss implements Runnable {
 	private static BufferedImage boss;
 	
 	
-	public Boss (double x, double y, double xSpeed, double ySpeed, int right, int top) {
-		
+	public Boss (double level) {
+		if (level <= 4){
+			r = 0.8;
+		}
+		else if (level <= 7){
+			r = 3.2;
+		}
+		else if (level > 8){
+			r = 5;
+		}
+		setXSpeed(xSpeed, r);
+		setYSpeed(ySpeed, r);
 	}
 	
 	public static void setSprite(){
@@ -61,7 +72,7 @@ public class Boss implements Runnable {
 	public void setXSpeed(double xSpeed, double rate){
 		this.xSpeed = xSpeed*rate;
 	}
-	public void setVelY(double ySpeed, double rate){
+	public void setYSpeed(double ySpeed, double rate){
 		this.ySpeed = ySpeed*rate;
 	}
 	

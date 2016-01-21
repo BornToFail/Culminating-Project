@@ -144,7 +144,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static void BossBehaviour(){
 		if(State == STATE.GAME){
-			//spawner.add(new Boss()); 
+			
 		}
 	}
 
